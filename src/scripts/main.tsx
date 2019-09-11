@@ -19,7 +19,7 @@ class App extends React.Component<any, any> {
     getUser() {
         const code = prompt("Enter passcodes: ");
 
-        if (code === "123") this.state.user.username = "Joy";
+        if (code === "123") this.state.user.username = "Cucumber";
         else if (code === "321") this.state.user.username = "Potato";
     }
 
