@@ -2,93 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Chat extends React.Component<any, any> {
+    ws: any;
+
     constructor(props) {
         super(props);
 
+        this.ws = props.ws;
         this.state = {
-            chats: [
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Kevin Hsu",
-                    content: "Hello World!",
-                    timestamp: "1m ago",
-                },
-                {
-                    username: "Alice Chen",
-                    content: "Foo",
-                    timestamp: "1m ago",
-                },
-            ]
+            user: props.user,
+            chats: []
         };
 
         this.submitMessage = this.submitMessage.bind(this);
-    }
-
-    componentDidMount() {
-        this.scrollToBot();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBot();
     }
 
     scrollToBot() {
@@ -98,20 +23,29 @@ class Chat extends React.Component<any, any> {
 
     submitMessage(e) {
         e.preventDefault();
+        const msgNode: any = ReactDOM.findDOMNode(this.refs.msg);
 
-        // this.setState({
-        //     chats: this.state.chats.concat([{
-        //         username: "Kevin Hsu",
-        //         content: <p>{ReactDOM.findDOMNode(this.refs.msg).value}</p>,
-        //         img: "http://i.imgur.com/Tj5DGiO.jpg",
-        //     }])
-        // }, () => {
-        //     ReactDOM.findDOMNode(this.refs.msg).value = "";
-        // });
+        const data = {
+            username: this.state.user.username,
+            content: msgNode.value,
+            timestamp: new Date().getTime()
+        };
+
+        this.setState({ chats: this.state.chats.concat([data]) }, () => msgNode.value = "");
+
+        this.ws.send(data);
+    }
+
+    receiveChat(json) {
+        const msgNode: any = ReactDOM.findDOMNode(this.refs.msg);
+        const data = JSON.parse(json);
+        if (data.username !== this.state.user.username) {
+            this.setState({ chats: this.state.chats.concat([data]) }, () => msgNode.value = "");
+        }
     }
 
     render() {
-        const username = "Kevin Hsu";
+        const username = this.state.user.username;
         const { chats }: any = this.state;
 
         return (
@@ -129,6 +63,16 @@ class Chat extends React.Component<any, any> {
                 </form>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.scrollToBot();
+
+        this.ws.setReceive(this.receiveChat.bind(this))
+    }
+
+    componentDidUpdate() {
+        this.scrollToBot();
     }
 }
 

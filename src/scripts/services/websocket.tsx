@@ -1,7 +1,11 @@
+import { send } from "q";
+
 export default {
     HOST_prod: 'ws://joytalk-server.herokuapp.com',
-    HOST_dev: 'ws://localhost:3000',
-    mode: 'dev',
+    HOST_dev: 'ws://localhost:8000',
+    mode: 'prod',
+
+    ws: null,
 
     getHost() {
         return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
@@ -9,10 +13,26 @@ export default {
 
     run() {
         var HOST = this.getHost();
-        var ws = new WebSocket(HOST);
+        this.ws = new WebSocket(HOST);
 
-        ws.onmessage = function (event) {
-            console.log('Server time: ' + event.data);
+        this.ws.onopen = () => {
+            console.log('Connected to server.')
+        }
+
+        this.ws.onclose = () => {
+            console.log('Disconnected to server')
+            this.ws = new WebSocket(HOST);
+        }
+    },
+
+    setReceive(callback) {
+        this.ws.onmessage = function (event) {
+            console.log('Message received from server: ' + event.data);
+            callback(event.data);
         };
+    },
+
+    send(data) {
+        this.ws.send(JSON.stringify(data))
     }
 }
