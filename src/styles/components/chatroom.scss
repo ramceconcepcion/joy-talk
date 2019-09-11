@@ -4,7 +4,8 @@
         padding: 10px;
         margin: 10px 0 0;
         height: 510px;
-        overflow-y: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .chat {
             background: rgba(255, 255, 255, 0.8);
@@ -22,6 +23,14 @@
             &.right {
                 float: right;
                 clear: both;
+
+                .username {
+                    right: 0px;
+                }
+
+                .date {
+                    right: 0px;
+                }
             }
 
             img {
