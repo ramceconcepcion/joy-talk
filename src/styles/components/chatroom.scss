@@ -1,25 +1,7 @@
 .chatroom {
-    width: 360px;
-    height: 600px;
-    background-color: rgba(0, 0, 0, .7);
-    border-radius: 5px;
-    overflow: hidden;
-
-    h3 {
-        font-family: 'Pacifico', cursive;
-        background-color: $primary-regular;
-        color: #FFF;
-        margin: 0;
-        height: 40px;
-        font-size: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .chats {
         box-sizing: border-box;
-        padding: 0 20px;
+        padding: 10px;
         margin: 10px 0 0;
         height: 510px;
         overflow-y: scroll;
@@ -55,13 +37,32 @@
                 margin: 0 !important;
             }
 
-            .chat a {
+            a {
                 text-decoration: none;
                 color: #3498DB;
             }
+
+            .username {
+                width: 100%;
+                color: #fff;
+                position: absolute;
+                top: -15px;
+                left: 0px;
+                font-size: 10px;
+                white-space: nowrap;
+            }
+
+            .date {
+                width: 100%;
+                color: #fff;
+                position: absolute;
+                bottom: -15px;
+                left: 0px;
+                font-size: 10px;
+                white-space: nowrap;
+            }
         }
     }
-
 
 
     .input {
@@ -75,7 +76,7 @@
         input[type="text"] {
             background: rgba(255, 255, 255, 0.5);
             outline: 0;
-            border: 2px solid $primary-dark;
+            border: none;
             padding: 0 5px;
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;

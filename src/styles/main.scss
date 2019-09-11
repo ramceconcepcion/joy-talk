@@ -18,15 +18,57 @@ body {
     width: 100vw;
     height: 100vh;
 
-    .app-wrapper {
+    .container-wrapper {
         height: 100%;
         width: 100%;
         background: #313131;
 
         @include flex-row-nowrap(center, center, center);
+
+        .app-window {
+            width: 360px;
+            height: 600px;
+            background-color: rgba(0, 0, 0, .7);
+            border-radius: 5px;
+            overflow: hidden;
+
+            h3 {
+                font-family: 'Pacifico', cursive;
+                background-color: $primary-regular;
+                color: #FFF;
+                margin: 0;
+                height: 40px;
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
     }
 }
 
 label {
     margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 6px;
+    margin-left: 4px
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    opacity: 0;
+    width: 0px;
+    height: 0px
+}
+
+::-webkit-scrollbar-thumb {
+    background: darken($primary-regular, 5%);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: darken($primary-regular, 20%);
+    opacity: 0.5;
 }

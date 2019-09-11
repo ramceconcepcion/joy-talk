@@ -1,12 +1,15 @@
 import React from 'react';
 
-import Chatroom from './components/Chatroom'
+import Chat from './components/Chat'
 
 class App extends React.Component {
     public render() {
         return (
-            <div className="app-wrapper">
-                <Chatroom />
+            <div className="container-wrapper">
+                <div className="app-window">
+                    <h3>JoyTalk</h3>
+                    <Chat />
+                </div>
             </div>
         )
     }
