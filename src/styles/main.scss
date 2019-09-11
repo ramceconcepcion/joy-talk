@@ -21,6 +21,9 @@ body {
     .app-wrapper {
         height: 100%;
         width: 100%;
+        background: #313131;
+
+        @include flex-row-nowrap(center, center, center);
     }
 }
 
