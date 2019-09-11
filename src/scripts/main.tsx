@@ -4,6 +4,7 @@ class App extends React.Component {
     public render() {
         return (
             <div className="app-wrapper">
+                Hi
             </div>
         )
     }
