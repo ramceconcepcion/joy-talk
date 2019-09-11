@@ -40,7 +40,7 @@ class Chat extends React.Component<any, any> {
         const msgNode: any = ReactDOM.findDOMNode(this.refs.msg);
         const data = JSON.parse(json);
         if (data.username !== this.state.user.username) {
-            this.setState({ chats: this.state.chats.concat([data]) }, () => msgNode.value = "");
+            this.setState({ chats: this.state.chats.concat([data]) });
         }
     }
 
