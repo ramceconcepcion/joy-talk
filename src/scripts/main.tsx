@@ -11,7 +11,7 @@ class App extends React.Component<any, any> {
 
         this.state = {
             user: {
-                username: "Potato"
+                username: ""
             }
         }
     }
@@ -28,7 +28,11 @@ class App extends React.Component<any, any> {
             <div className="container-wrapper">
                 <div className="app-window">
                     <h3>JoyTalk</h3>
-                    <Chat user={this.state.user} ws={this.ws} />
+                    {
+                        this.state.user.username === "" ?
+                            <span>You are not authorized.</span> :
+                            <Chat user={this.state.user} ws={this.ws} />
+                    }
                 </div>
             </div>
         )

@@ -1,7 +1,7 @@
 import { send } from "q";
 
 export default {
-    HOST_prod: 'ws://joytalk-server.herokuapp.com',
+    HOST_prod: 'wss://joytalk-server.herokuapp.com',
     HOST_dev: 'ws://localhost:8000',
     mode: 'prod',
 
