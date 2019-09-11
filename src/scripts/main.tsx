@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Chat from './components/Chat'
+import Chat from './components/Chat';
 
 class App extends React.Component {
     public render() {
@@ -14,6 +14,5 @@ class App extends React.Component {
         )
     }
 }
-
 
 export default App;

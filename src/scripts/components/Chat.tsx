@@ -92,7 +92,8 @@ class Chat extends React.Component<any, any> {
     }
 
     scrollToBot() {
-        //ReactDOM.findDOMNode(this.refs.chats).scrollTop = ReactDOM.findDOMNode(this.refs.chats).scrollHeight;
+        const el: any = ReactDOM.findDOMNode(this.refs.chats);
+        el.scrollTop = el.scrollHeight;
     }
 
     submitMessage(e) {
@@ -117,8 +118,8 @@ class Chat extends React.Component<any, any> {
             <div className="chatroom">
                 <ul className="chats" ref="chats">
                     {
-                        chats.map((chat) =>
-                            <Message chat={chat} user={username} />
+                        chats.map((chat, idx) =>
+                            <Message chat={chat} user={username} key={idx} />
                         )
                     }
                 </ul>

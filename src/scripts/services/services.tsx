@@ -1,7 +1,13 @@
-class Services {
+export default {
+    get() {
 
+    },
 
-}
+    refresh() {
 
+    },
 
-export default Services;
+    send() {
+
+    },
+};
