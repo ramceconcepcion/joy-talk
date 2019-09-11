@@ -1,0 +1,34 @@
+@mixin flex-incl($jc, $ai, $ac) {
+    justify-content: $jc;
+    align-items: $ai;
+    align-content: $ac;
+}
+
+@mixin flex-row-nowrap($jc, $ai, $ac) {
+    display: flex;
+    flex-flow: row nowrap;
+    @include flex-incl($jc, $ai, $ac);
+}
+
+@mixin flex-row-wrap($jc, $ai, $ac) {
+    display: flex;
+    flex-flow: row wrap;
+    @include flex-incl($jc, $ai, $ac);
+}
+
+@mixin flex-col-nowrap($jc, $ai, $ac) {
+    display: flex;
+    flex-flow: column nowrap;
+    @include flex-incl($jc, $ai, $ac);
+}
+
+@mixin flex-col-wrap($jc, $ai, $ac) {
+    display: flex;
+    flex-flow: column wrap;
+    @include flex-incl($jc, $ai, $ac);
+}
+
+@mixin size($h, $w: $h) {
+    height: $h;
+    width: $w;
+}
