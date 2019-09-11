@@ -1,5 +1,5 @@
 .chatroom {
-    @include size(calc(100% - $headerHeight), 100%);
+    @include size(calc(100% - #{$headerHeight}), 100%);
 
     .chats {
         box-sizing: border-box;
