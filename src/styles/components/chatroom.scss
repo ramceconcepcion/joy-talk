@@ -1,9 +1,12 @@
 .chatroom {
+    @include size(calc(100% - $headerHeight), 100%);
+
     .chats {
         box-sizing: border-box;
         padding: 10px;
         margin: 10px 0 0;
         height: 510px;
+        width: 100%;
         overflow-y: auto;
         overflow-x: hidden;
 
@@ -16,7 +19,7 @@
             list-style: none;
             float: left;
             clear: both;
-            margin: 20px 0;
+            margin: 10px 0;
             max-width: 200px;
             word-break: break-word;
 
@@ -26,10 +29,12 @@
 
                 .username {
                     right: 0px;
+                    text-align: right;
                 }
 
                 .date {
                     right: 0px;
+                    text-align: right;
                 }
             }
 
@@ -51,24 +56,22 @@
                 color: #3498DB;
             }
 
-            .username {
-                width: 100%;
+            .username,
+            .date {
+                width: auto;
                 color: #fff;
                 position: absolute;
-                top: -15px;
                 left: 0px;
                 font-size: 10px;
                 white-space: nowrap;
             }
 
+            .username {
+                top: -15px;
+            }
+
             .date {
-                width: 100%;
-                color: #fff;
-                position: absolute;
                 bottom: -15px;
-                left: 0px;
-                font-size: 10px;
-                white-space: nowrap;
             }
         }
     }

@@ -1,3 +1,5 @@
+$headerHeight: 40px;
+
 body {
     margin: 0;
     padding: 0;
@@ -31,17 +33,28 @@ body {
             background-color: rgba(0, 0, 0, .7);
             border-radius: 5px;
             overflow: hidden;
+            position: relative;
 
-            h3 {
+            @include flex-col-nowrap(flex-start, center, center);
+
+            .app-title {
                 font-family: 'Pacifico', cursive;
                 background-color: $primary-regular;
-                color: #FFF;
+                color: #fff;
                 margin: 0;
-                height: 40px;
+                height: $headerHeight;
+                width: 100%;
                 font-size: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                @include flex-row-nowrap(center, center, center);
+            }
+
+            .passcodeError {
+                color: white;
+                position: absolute;
+                top: 0px;
+                bottom: 0px;
+
+                @include flex-col-nowrap(center, center, center);
             }
         }
     }

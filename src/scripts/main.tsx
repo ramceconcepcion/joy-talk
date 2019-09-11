@@ -4,7 +4,7 @@ import Chat from './components/Chat';
 import WebSocket from './services/websocket';
 
 class App extends React.Component<any, any> {
-    ws: any = WebSocket
+    ws: any = WebSocket;
 
     constructor(props) {
         super(props);
@@ -23,14 +23,18 @@ class App extends React.Component<any, any> {
         else if (code === "321") this.state.user.username = "Potato";
     }
 
+    isAuthorized() {
+        return this.state.user.username === "" ? true : false
+    }
+
     public render() {
         return (
             <div className="container-wrapper">
                 <div className="app-window">
-                    <h3>JoyTalk</h3>
+                    <div className="app-title">JoyTalk</div>
                     {
-                        this.state.user.username === "" ?
-                            <span>You are not authorized.</span> :
+                        this.isAuthorized() ?
+                            <div className="passcodeError">You are not authorized to use this app.</div> :
                             <Chat user={this.state.user} ws={this.ws} />
                     }
                 </div>
