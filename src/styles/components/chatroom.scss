@@ -21,7 +21,7 @@
         overflow-x: hidden;
 
         .chat {
-            background: rgba(255, 255, 255, 0.8);
+            background: $white;
             position: relative;
             padding: 5px 13px;
             font-size: 14px;
@@ -61,11 +61,6 @@
                 margin: 0 !important;
             }
 
-            a {
-                text-decoration: none;
-                color: #3498DB;
-            }
-
             .username,
             .date {
                 width: auto;
@@ -100,7 +95,7 @@
         box-sizing: border-box;
 
         input[type="text"] {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.8);
             outline: 0;
             border: none;
             border-radius: 50px;

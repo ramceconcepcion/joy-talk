@@ -61,6 +61,7 @@
         @include size(30px, 100%);
         line-height: 30px;
         text-align: center;
+        cursor: pointer;
         // border-bottom: 1px solid #ccc;
 
         @extend %user-select-none;

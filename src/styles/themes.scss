@@ -1,0 +1,57 @@
+@mixin applyTheme($regular) {
+    .app-header {
+        background-color: $regular;
+    }
+
+    .chatroom {
+        .input {
+            background: $regular;
+        }
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: darken($regular, 5%);
+    }
+
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: darken($regular, 20%);
+    }
+}
+
+html {
+    .gray {
+        @include applyTheme($gray-regular);
+    }
+
+    .purple {
+        @include applyTheme($purple-regular);
+    }
+
+    .deeppurple {
+        @include applyTheme($deeppurple-regular);
+    }
+
+    .pink {
+        @include applyTheme($pink-regular);
+    }
+
+    .red {
+        @include applyTheme($red-regular);
+    }
+
+    .indigo {
+        @include applyTheme($indigo-regular);
+    }
+
+    .lightblue {
+        @include applyTheme($lightblue-regular);
+    }
+
+    .orange {
+        @include applyTheme($orange-regular);
+    }
+
+    .deeporange {
+        @include applyTheme($deeporange-regular);
+    }
+}
