@@ -33,16 +33,17 @@ class Chat extends React.Component<any, any> {
             timestamp: new Date().getTime()
         };
 
-        this.setState({ chats: this.state.chats.concat([data]) }, () => input.value = "");
-
         this.ws.send(data);
+        input.value = ""
     }
 
     receiveChat(json) {
         const data = JSON.parse(json);
-        if (data.id !== this.state.user.id) {
-            this.setState({ chats: this.state.chats.concat([data]) });
-        }
+        // if (data.id !== this.state.user.id) {
+        //     this.setState({ chats: this.state.chats.concat([data]) });
+        // }
+
+        this.setState({ chats: this.state.chats.concat([data]) });
     }
 
     render() {

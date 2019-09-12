@@ -23,11 +23,12 @@ body {
         width: 100%;
         background: #313131;
 
-        @include flex-row-nowrap(center, center, center);
+        @include flex-row-nowrap(center, flex-start, flex-start);
 
         .app-window {
-            width: 360px;
-            height: 600px;
+            margin: 100px 0 0 0;
+            width: $windowWidth;
+            height: $windowHeight;
             background-color: rgba(0, 0, 0, .7);
             border-radius: 5px;
             overflow: hidden;
