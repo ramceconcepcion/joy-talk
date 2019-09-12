@@ -15,21 +15,20 @@ body {
 }
 
 #root {
-    width: 100vw;
-    height: 100vh;
+    @include size(auto, 100vw);
+    min-height: 100vh;
 
     .container-wrapper {
-        height: 100%;
-        width: 100%;
-        background: #313131;
+        @include size(auto, 100vw);
+        min-height: 100vh;
 
+        background: #313131;
         @include flex-row-nowrap(center, flex-start, flex-start);
 
         .app-window {
-            margin: 100px 0 0 0;
+            margin: 100px 0;
             width: $windowWidth;
             height: $windowHeight;
-            background-color: rgba(0, 0, 0, .7);
             border-radius: 5px;
             overflow: hidden;
             position: relative;
