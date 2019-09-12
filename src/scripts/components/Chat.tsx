@@ -128,7 +128,7 @@ class Message extends React.Component<any, any> {
         return (
             <li className={`chat ${this.state.user === this.state.chat.name ? "right" : "left"}`}>
                 <span className="username">{this.state.chat.name}</span>
-                <p>{this.state.chat.content}</p>
+                <p className="message">{this.state.chat.content}</p>
                 <span className="date">{this.getTime()}</span>
             </li>
         )

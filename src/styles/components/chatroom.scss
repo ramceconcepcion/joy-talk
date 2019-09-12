@@ -20,22 +20,22 @@
         overflow-y: auto;
         overflow-x: hidden;
 
+        @include flex-col-nowrap(flex-start, flex-start, flex-start);
+
         .chat {
             background: $primary-regular;
             position: relative;
             padding: 5px 13px;
             font-size: 14px;
             border-radius: 10px;
+
             list-style: none;
-            float: left;
-            clear: both;
             margin: 10px 0;
             max-width: 200px;
             word-break: break-word;
 
             &.right {
-                float: right;
-                clear: both;
+                margin-left: auto;
                 background: $primary-regular;
 
                 .username {
@@ -60,9 +60,13 @@
                 left: 0px;
             }
 
-            p {
+            .message {
                 margin: 0 !important;
                 color: $white;
+
+                &:hover~.date {
+                    display: block;
+                }
             }
 
             .username {
@@ -77,6 +81,7 @@
             }
 
             .date {
+                display: none;
                 width: auto;
                 color: $white;
                 position: absolute;
