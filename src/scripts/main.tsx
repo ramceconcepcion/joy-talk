@@ -39,6 +39,10 @@ class App extends React.Component<any, any> {
         this.setState({ ws })
     }
 
+    applyThemeFromLocal() {
+        document.body.className = localStorage['joytalk_theme'] || 'primary';
+    }
+
     public render() {
         return (
             <div className="container-wrapper">
@@ -59,7 +63,7 @@ class App extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        document.body.className = localStorage['joytalk_theme'] || 'primary';
+        this.applyThemeFromLocal();
     }
 }
 
