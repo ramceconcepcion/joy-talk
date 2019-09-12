@@ -90,10 +90,8 @@
         height: 40px;
         width: 100%;
         background: $primary-regular;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
 
+        @include flex-row-nowrap(flex-start, center, flex-start);
         box-sizing: border-box;
 
         input[type="text"] {
