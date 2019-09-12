@@ -59,6 +59,7 @@ class App extends React.Component<any, any> {
     }
 
     componentDidMount() {
+        document.body.className = localStorage['joytalk_theme'] || 'primary';
     }
 }
 

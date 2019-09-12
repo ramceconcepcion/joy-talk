@@ -62,4 +62,12 @@ html {
     .bluegrey {
         @include applyTheme($bluegrey-regular);
     }
+
+    .green {
+        @include applyTheme($green-regular);
+    }
+
+    .lime {
+        @include applyTheme($lime-regular);
+    }
 }

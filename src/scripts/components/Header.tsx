@@ -8,8 +8,11 @@ class Header extends React.Component<any, any>{
 
         this.state = {
             user: props.user,
-            connection: props.connection
+            connection: props.connection,
+            showThemeMenu: false,
         }
+
+        this.toggleThemeMenu = this.toggleThemeMenu.bind(this);
     }
 
     isAuthorized() {
@@ -24,25 +27,27 @@ class Header extends React.Component<any, any>{
         return this.state.connection ? 'You are connected to the server.' : 'You are disconnected from the server.';
     }
 
-    toggleMenu() {
-
+    toggleThemeMenu() {
+        this.setState({ showThemeMenu: this.state.showThemeMenu ? false : true });
     }
 
     render() {
         return (
             <div className="app-header">
                 {
-                    this.isAuthorized() ? <div className={this.getConnection()} title={this.getConnectionTitle()}></div>
-                        : null
+                    !this.isAuthorized() ? null :
+                        <div className={this.getConnection()} title={this.getConnectionTitle()}></div>
                 }
                 <div className="app-title">JoyTalk</div>
                 {
-                    this.isAuthorized() ? <div className="menu">
-                        <img src={menuicon} alt="" />
-                    </div> : null
+                    !this.isAuthorized() ? null :
+                        <div className="menu" onClick={(e) => this.toggleThemeMenu()}>
+                            <img src={menuicon} alt="" />
+                        </div>
                 }
 
                 {/* <Menu /> */}
+                {<ThemePicker show={this.state.showThemeMenu} />}
             </div>
         )
     }
@@ -71,7 +76,47 @@ class Menu extends React.Component<any, any>{
 }
 
 class ThemePicker extends React.Component<any, any>{
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            show: props.show
+        }
+    }
+
+    getClass() {
+        return "item" + "";
+    }
+
+    setStyle() {
+        return { display: this.state.show ? "flex" : "none" }
+    }
+
+    applyTheme(el) {
+        document.body.className = el.getAttribute('data-value');
+        localStorage['joytalk_theme'] = el.getAttribute('data-value');
+    }
+
+    render() {
+        const colors = ['primary', 'gray', 'purple', 'deeppurple', 'pink', 'red', 'indigo', 'lightblue', 'cyan',
+            'teal', 'orange', 'deeporange', 'bluegrey', 'green', 'lime'];
+
+        return (
+            <div className="theme-menu" style={this.setStyle()}>
+                {
+                    colors.map(c => {
+                        return <div className={this.getClass()} data-value={c} onClick={e => this.applyTheme(e.target)}></div>
+                    })
+                }
+            </div>
+        )
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.show != this.props.show) {
+            this.setState({ show: this.props.show });
+        }
+    }
 }
 
 
