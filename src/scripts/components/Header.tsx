@@ -70,5 +70,9 @@ class Menu extends React.Component<any, any>{
     }
 }
 
+class ThemePicker extends React.Component<any, any>{
+
+}
+
 
 export default Header
