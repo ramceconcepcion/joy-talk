@@ -21,7 +21,7 @@
         overflow-x: hidden;
 
         .chat {
-            background: $white;
+            background: $primary-regular;
             position: relative;
             padding: 5px 13px;
             font-size: 14px;
@@ -36,6 +36,7 @@
             &.right {
                 float: right;
                 clear: both;
+                background: $primary-regular;
 
                 .username {
                     right: 0px;
@@ -59,12 +60,13 @@
 
             p {
                 margin: 0 !important;
+                color: $white;
             }
 
             .username,
             .date {
                 width: auto;
-                color: #fff;
+                color: $white;
                 position: absolute;
                 left: 0px;
                 font-size: 10px;

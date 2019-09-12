@@ -66,10 +66,10 @@ label {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: darken($primary-regular, 5%);
+    background: darken($primary-regular, 0);
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
-    background: darken($primary-regular, 20%);
+    background: lighten($primary-regular, 10%);
     opacity: 0.5;
 }

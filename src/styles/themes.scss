@@ -4,17 +4,17 @@
     }
 
     .chatroom {
+        .chats {
+            .chat {
+                &.right {
+                    background: $regular;
+                }
+            }
+        }
+
         .input {
             background: $regular;
         }
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: darken($regular, 5%);
-    }
-
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background: darken($regular, 20%);
     }
 }
 
@@ -47,11 +47,19 @@ html {
         @include applyTheme($lightblue-regular);
     }
 
+    .teal {
+        @include applyTheme($teal-regular);
+    }
+
     .orange {
         @include applyTheme($orange-regular);
     }
 
     .deeporange {
         @include applyTheme($deeporange-regular);
+    }
+
+    .bluegrey {
+        @include applyTheme($bluegrey-regular);
     }
 }
