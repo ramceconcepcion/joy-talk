@@ -117,11 +117,14 @@ class Message extends React.Component<any, any> {
         const date = new Date(ts);
 
         let h: any = date.getHours();
-        h = h > 9 ? h : '0' + h;
         let m: any = date.getMinutes();
+        const suffix = h > 12 ? "PM" : "AM";
+
+        h = h > 12 ? h - 12 : h;
+        h = h > 9 ? h : '0' + h;
         m = m > 9 ? m : '0' + m;
 
-        return `${h}:${m}`;
+        return `${h}:${m}${suffix}`;
     }
 
     public render() {
