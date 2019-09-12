@@ -1,8 +1,8 @@
 import React from 'react';
 
 //Others
-import Users from './users';
-import WebSocket from './services/websocket';
+import Users from './misc/users';
+import WebSocket from './misc/websocket';
 
 //Components
 import Chat from './components/Chat';

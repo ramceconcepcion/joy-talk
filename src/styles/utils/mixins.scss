@@ -32,3 +32,10 @@
     height: $h;
     width: $w;
 }
+
+%user-select-none {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}

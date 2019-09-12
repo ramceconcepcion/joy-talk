@@ -37,8 +37,13 @@ class Chat extends React.Component<any, any> {
     sendChat(e) {
         e.preventDefault();
         const input: any = ReactDOM.findDOMNode(this.refs.msg);
-        const data = this.createChat(input.value);
-        this.ws.send(data);
+        const text = input.value.replace(/\s\s+/g, ' ');
+
+        if (text != " " && text != "") {
+            const data = this.createChat(text);
+            this.ws.send(data);
+        }
+
         input.value = "";
     }
 
@@ -79,7 +84,6 @@ class Chat extends React.Component<any, any> {
 
     componentDidMount() {
         this.scrollToBot();
-
         this.ws.setReceive(this.receiveChat)
     }
 
