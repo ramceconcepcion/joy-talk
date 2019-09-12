@@ -24,6 +24,10 @@ class Header extends React.Component<any, any>{
         return this.state.connection ? 'You are connected to the server.' : 'You are disconnected from the server.';
     }
 
+    toggleMenu() {
+
+    }
+
     render() {
         return (
             <div className="app-header">
@@ -32,13 +36,13 @@ class Header extends React.Component<any, any>{
                         : null
                 }
                 <div className="app-title">JoyTalk</div>
-
-
                 {
                     this.isAuthorized() ? <div className="menu">
                         <img src={menuicon} alt="" />
                     </div> : null
                 }
+
+                {/* <Menu /> */}
             </div>
         )
     }
@@ -47,6 +51,22 @@ class Header extends React.Component<any, any>{
         if (prevProps.connection != this.props.connection) {
             this.setState({ connection: this.props.connection });
         }
+    }
+}
+
+class Menu extends React.Component<any, any>{
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div className="header-menu">
+                <div className="item">Themes</div>
+                <div className="item">Name</div>
+                <div className="item">Passcode</div>
+            </div>
+        )
     }
 }
 

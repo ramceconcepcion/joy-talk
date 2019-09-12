@@ -19,7 +19,6 @@
         width: 100%;
         overflow-y: auto;
         overflow-x: hidden;
-        background-color: #111111;
 
         .chat {
             background: rgba(255, 255, 255, 0.8);
@@ -90,7 +89,7 @@
     .input {
         position: absolute;
         bottom: 0;
-
+        padding: 5px;
         height: 40px;
         width: 100%;
         background: $primary-regular;
@@ -98,37 +97,37 @@
         flex-direction: row;
         align-items: center;
 
+        box-sizing: border-box;
+
         input[type="text"] {
             background: rgba(255, 255, 255, 0.5);
             outline: 0;
             border: none;
+            border-radius: 50px;
             padding: 0 5px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            margin-left: 10px;
             height: 30px;
-            width: 270px;
-            box-sizing: border-box;
+            width: 100%;
             font-size: 14px;
+
+            box-sizing: border-box;
+            text-indent: 10px;
         }
 
         input[type="submit"] {
-            background: transparent;
-            border: 1px solid $primary-dark;
-            height: 30px;
-            width: 70px;
-            font-size: 14px;
-            box-sizing: border-box;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #fff;
+            display: none;
         }
 
-        input[type="submit"]:hover {
-            background: $primary-light;
-            color: #FFF;
+        .sendimg {
+            position: absolute;
+            right: 20px;
+            cursor: pointer;
+
+            @include size(30px, 20px);
+            @include flex-row-nowrap(center, center, center);
+
+            img {
+                @include size(20px, auto)
+            }
         }
     }
 }

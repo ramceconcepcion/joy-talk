@@ -1,4 +1,5 @@
 .app-header {
+    flex: 0 0 auto;
     @include size($headerHeight, 100%);
     background-color: $primary-regular;
     padding: 0 10px;
@@ -41,5 +42,22 @@
             @include size(30px, auto);
             user-select: none;
         }
+    }
+}
+
+.header-menu {
+    position: absolute;
+    top: $headerHeight;
+    right: 0;
+    z-index: 100;
+
+    @include size(auto, 100%);
+    padding: 0 10px;
+    background-color: #fff;
+
+    .item {
+        @include size(30px, 100%);
+        line-height: 30px;
+        text-align: center;
     }
 }

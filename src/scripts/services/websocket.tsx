@@ -17,13 +17,13 @@ export default {
 
         this.ws.onopen = () => {
             console.log('Connected to server.');
-            connectionCb(true);
+            connectionCb(true, this.ws);
         }
 
         this.ws.onclose = () => {
             console.log('Disconnected to server');
-            connectionCb(false);
-            this.run(connectionCb)
+            connectionCb(false, this.ws);
+            //this.run(connectionCb)
         }
     },
 

@@ -26,12 +26,13 @@ body {
         @include flex-row-nowrap(center, flex-start, flex-start);
 
         .app-window {
-            margin: 100px 0;
+            margin: 50px 0;
             width: $windowWidth;
             height: $windowHeight;
             border-radius: 5px;
             overflow: hidden;
             position: relative;
+            background-color: #111111;
 
             @include flex-col-nowrap(flex-start, center, center);
 

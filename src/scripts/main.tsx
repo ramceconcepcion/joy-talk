@@ -18,6 +18,7 @@ class App extends React.Component<any, any> {
         this.state = {
             user: null,
             connection: false,
+            ws: this.ws
         }
 
         this.checkConnection = this.checkConnection.bind(this);
@@ -33,8 +34,9 @@ class App extends React.Component<any, any> {
         return !this.state.user ? false : true
     }
 
-    checkConnection(connected) {
-        this.setState({ connection: connected })
+    checkConnection(connected, ws) {
+        this.setState({ connection: connected });
+        this.setState({ ws })
     }
 
     public render() {
@@ -43,7 +45,7 @@ class App extends React.Component<any, any> {
                 <div className="app-window">
                     <Header user={this.state.user} connection={this.state.connection} />
                     {
-                        this.isAuthorized() ? <Chat user={this.state.user} ws={this.ws} />
+                        this.isAuthorized() ? <Chat user={this.state.user} ws={this.state.ws} />
                             : <div className="passcodeError">You are not authorized to use this app.</div>
                     }
                 </div>

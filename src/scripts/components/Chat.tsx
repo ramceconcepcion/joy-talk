@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import sendicon from '../../icons/send.svg';
+
 class Chat extends React.Component<any, any> {
     ws: any;
 
@@ -15,6 +17,7 @@ class Chat extends React.Component<any, any> {
 
         this.sendChat = this.sendChat.bind(this);
         this.receiveChat = this.receiveChat.bind(this);
+        this.createChat = this.createChat.bind(this);
     }
 
     scrollToBot() {
@@ -22,19 +25,21 @@ class Chat extends React.Component<any, any> {
         el.scrollTop = el.scrollHeight;
     }
 
+    createChat(content) {
+        return {
+            id: this.state.user.id,
+            name: this.state.user.name,
+            content: content,
+            timestamp: new Date().getTime()
+        }
+    }
+
     sendChat(e) {
         e.preventDefault();
         const input: any = ReactDOM.findDOMNode(this.refs.msg);
-
-        const data = {
-            id: this.state.user.id,
-            name: this.state.user.name,
-            content: input.value,
-            timestamp: new Date().getTime()
-        };
-
+        const data = this.createChat(input.value);
         this.ws.send(data);
-        input.value = ""
+        input.value = "";
     }
 
     receiveChat(json) {
@@ -62,8 +67,11 @@ class Chat extends React.Component<any, any> {
                     }
                 </ul>
                 <form className="input" onSubmit={(e) => this.sendChat(e)}>
-                    <input type="text" ref="msg" />
-                    <input type="submit" value="Submit" />
+                    <input type="text" ref="msg" placeholder="Type here..." />
+                    <input type="submit" id="submit" />
+                    <div className="sendimg" onClick={(e) => this.sendChat(e)}>
+                        <img src={sendicon} alt="" />
+                    </div>
                 </form>
             </div>
         );
