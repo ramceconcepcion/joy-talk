@@ -102,12 +102,24 @@ class Message extends React.Component<any, any> {
         }
     }
 
+    getTime() {
+        const ts = this.state.chat.timestamp;
+        const date = new Date(ts);
+
+        let h: any = date.getHours();
+        h = h > 9 ? h : '0' + h;
+        let m: any = date.getMinutes();
+        m = m > 9 ? m : '0' + m;
+
+        return `${h}:${m}`;
+    }
+
     public render() {
         return (
             <li className={`chat ${this.state.user === this.state.chat.name ? "right" : "left"}`}>
                 <span className="username">{this.state.chat.name}</span>
                 <p>{this.state.chat.content}</p>
-                {/* <span className="date">{this.state.chat.timestamp}</span> */}
+                <span className="date">{this.getTime()}</span>
             </li>
         )
     }

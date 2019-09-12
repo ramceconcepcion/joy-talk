@@ -14,7 +14,7 @@
     .chats {
         box-sizing: border-box;
         padding: 10px;
-        margin: 0;
+        margin: 0 0 0 0;
         height: calc(#{$windowHeight} - 80px);
         width: 100%;
         overflow-y: auto;
@@ -44,8 +44,10 @@
                 }
 
                 .date {
-                    right: 0px;
                     text-align: right;
+
+                    left: -25px;
+                    right: initial;
                 }
             }
 
@@ -63,22 +65,26 @@
                 color: $white;
             }
 
-            .username,
-            .date {
+            .username {
                 width: auto;
                 color: $white;
                 position: absolute;
                 left: 0px;
                 font-size: 10px;
                 white-space: nowrap;
-            }
 
-            .username {
                 top: -15px;
             }
 
             .date {
-                bottom: -15px;
+                width: auto;
+                color: $white;
+                position: absolute;
+                font-size: 8px;
+                white-space: nowrap;
+
+                bottom: 2px;
+                right: -25px;
             }
         }
     }
