@@ -5,6 +5,7 @@ import sendicon from '../../icons/send.svg';
 
 class Chat extends React.Component<any, any> {
     ws: any;
+    notifyTimeoutId: any;
 
     constructor(props) {
         super(props);
@@ -45,6 +46,7 @@ class Chat extends React.Component<any, any> {
         }
 
         input.value = "";
+        this.changeTitle("Joy Talk");
     }
 
     receiveChat(json) {
@@ -54,6 +56,14 @@ class Chat extends React.Component<any, any> {
         // }
 
         this.setState({ chats: this.state.chats.concat([data]) });
+        if (data.id != this.state.user.id) {
+            this.changeTitle("You have a new message!");
+        }
+    }
+
+
+    changeTitle(msg) {
+        document.title = msg;
     }
 
     render() {
