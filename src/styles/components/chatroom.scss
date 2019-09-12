@@ -1,6 +1,14 @@
 .chatroom {
     @include size(calc(100% - #{$headerHeight}), 100%);
 
+    .chat-log {
+        color: #eeeeee;
+        font-size: 12px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
     .chats {
         box-sizing: border-box;
         padding: 10px;

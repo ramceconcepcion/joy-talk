@@ -35,17 +35,6 @@ body {
 
             @include flex-col-nowrap(flex-start, center, center);
 
-            .app-title {
-                font-family: 'Pacifico', cursive;
-                background-color: $primary-regular;
-                color: #fff;
-                margin: 0;
-                height: $headerHeight;
-                width: 100%;
-                font-size: 20px;
-                @include flex-row-nowrap(center, center, center);
-            }
-
             .passcodeError {
                 color: white;
                 position: absolute;

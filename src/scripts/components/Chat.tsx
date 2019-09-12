@@ -10,10 +10,11 @@ class Chat extends React.Component<any, any> {
         this.ws = props.ws;
         this.state = {
             user: props.user,
-            chats: []
+            chats: [],
         };
 
-        this.submitMessage = this.submitMessage.bind(this);
+        this.sendChat = this.sendChat.bind(this);
+        this.receiveChat = this.receiveChat.bind(this);
     }
 
     scrollToBot() {
@@ -21,43 +22,45 @@ class Chat extends React.Component<any, any> {
         el.scrollTop = el.scrollHeight;
     }
 
-    submitMessage(e) {
+    sendChat(e) {
         e.preventDefault();
-        const msgNode: any = ReactDOM.findDOMNode(this.refs.msg);
+        const input: any = ReactDOM.findDOMNode(this.refs.msg);
 
         const data = {
-            username: this.state.user.username,
-            content: msgNode.value,
+            id: this.state.user.id,
+            name: this.state.user.name,
+            content: input.value,
             timestamp: new Date().getTime()
         };
 
-        this.setState({ chats: this.state.chats.concat([data]) }, () => msgNode.value = "");
+        this.setState({ chats: this.state.chats.concat([data]) }, () => input.value = "");
 
         this.ws.send(data);
     }
 
     receiveChat(json) {
-        const msgNode: any = ReactDOM.findDOMNode(this.refs.msg);
         const data = JSON.parse(json);
-        if (data.username !== this.state.user.username) {
+        if (data.id !== this.state.user.id) {
             this.setState({ chats: this.state.chats.concat([data]) });
         }
     }
 
     render() {
-        const username = this.state.user.username;
         const { chats }: any = this.state;
 
         return (
             <div className="chatroom">
                 <ul className="chats" ref="chats">
                     {
+                        <Welcome user={this.state.user} />
+                    }
+                    {
                         chats.map((chat, idx) =>
-                            <Message chat={chat} user={username} key={idx} />
+                            <Message chat={chat} user={this.state.user.name} key={idx} />
                         )
                     }
                 </ul>
-                <form className="input" onSubmit={(e) => this.submitMessage(e)}>
+                <form className="input" onSubmit={(e) => this.sendChat(e)}>
                     <input type="text" ref="msg" />
                     <input type="submit" value="Submit" />
                 </form>
@@ -68,7 +71,7 @@ class Chat extends React.Component<any, any> {
     componentDidMount() {
         this.scrollToBot();
 
-        this.ws.setReceive(this.receiveChat.bind(this))
+        this.ws.setReceive(this.receiveChat)
     }
 
     componentDidUpdate() {
@@ -88,11 +91,31 @@ class Message extends React.Component<any, any> {
 
     public render() {
         return (
-            <li className={`chat ${this.state.user === this.state.chat.username ? "right" : "left"}`}>
-                <span className="username">{this.state.chat.username}</span>
+            <li className={`chat ${this.state.user === this.state.chat.name ? "right" : "left"}`}>
+                <span className="username">{this.state.chat.name}</span>
                 <p>{this.state.chat.content}</p>
                 {/* <span className="date">{this.state.chat.timestamp}</span> */}
             </li>
+        )
+    }
+}
+
+class Welcome extends React.Component<any, any>{
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user: props.user,
+        }
+    }
+
+    getWelcome() {
+        return 'Welcome to JoyTalk, ' + this.state.user.name
+    }
+
+    public render() {
+        return (
+            <div className="chat-log" > {this.getWelcome()}</div>
         )
     }
 }

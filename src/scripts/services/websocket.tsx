@@ -11,23 +11,24 @@ export default {
         return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
     },
 
-    run() {
+    run(connectionCb) {
         var HOST = this.getHost();
         this.ws = new WebSocket(HOST);
 
         this.ws.onopen = () => {
-            console.log('Connected to server.')
+            console.log('Connected to server.');
+            connectionCb(true);
         }
 
         this.ws.onclose = () => {
-            console.log('Disconnected to server')
-            this.ws = new WebSocket(HOST);
+            console.log('Disconnected to server');
+            connectionCb(false);
+            this.run(connectionCb)
         }
     },
 
     setReceive(callback) {
         this.ws.onmessage = function (event) {
-            console.log('Message received from server: ' + event.data);
             callback(event.data);
         };
     },

@@ -1,0 +1,45 @@
+.app-header {
+    @include size($headerHeight, 100%);
+    background-color: $primary-regular;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    @include flex-row-nowrap(center, center, center);
+
+    position: relative;
+
+    .app-title {
+        font-family: 'Pacifico', cursive;
+        color: #fff;
+        margin: 0;
+        font-size: 20px;
+    }
+
+    .connection {
+        position: absolute;
+        left: 10px;
+        @include size(10px);
+        border-radius: 100%;
+
+        &.connected {
+            background: #06cc25;
+        }
+
+        &.disconnected {
+            background: #ff3939;
+        }
+    }
+
+    .menu {
+        position: absolute;
+        right: 0px;
+        @include size(auto);
+        @include flex-row-nowrap(center, center, center);
+        cursor: pointer;
+
+        img {
+            @include size(30px, auto);
+            user-select: none;
+        }
+    }
+}

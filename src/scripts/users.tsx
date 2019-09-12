@@ -1,12 +1,12 @@
 export default [
     {
-        name: "Joy",
-        un: "dubidubidapdap",
-        pw: "dubidubidapdap1234"
+        id: 1,
+        name: "Cucumber",
+        code: "123",
     },
     {
+        id: 2,
         name: "Potato",
-        un: "potatosalad1234",
-        pw: "potatosalad1234"
+        code: "321",
     },
 ]

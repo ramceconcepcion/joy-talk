@@ -1,7 +1,13 @@
 import React from 'react';
 
-import Chat from './components/Chat';
+//Others
+import Users from './users';
 import WebSocket from './services/websocket';
+
+//Components
+import Chat from './components/Chat';
+import Header from './components/Header';
+
 
 class App extends React.Component<any, any> {
     ws: any = WebSocket;
@@ -10,32 +16,35 @@ class App extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            user: {
-                username: ""
-            }
+            user: null,
+            connection: false,
         }
+
+        this.checkConnection = this.checkConnection.bind(this);
     }
 
     getUser() {
-        const code = prompt("Enter passcodes: ");
-
-        if (code === "123") this.state.user.username = "Cucumber";
-        else if (code === "321") this.state.user.username = "Potato";
+        const code = prompt("Enter passcode: ");
+        let user: any = Users.find(u => u.code == code);
+        this.setState({ user });
     }
 
     isAuthorized() {
-        return this.state.user.username === "" ? true : false
+        return !this.state.user ? false : true
+    }
+
+    checkConnection(connected) {
+        this.setState({ connection: connected })
     }
 
     public render() {
         return (
             <div className="container-wrapper">
                 <div className="app-window">
-                    <div className="app-title">JoyTalk</div>
+                    <Header user={this.state.user} connection={this.state.connection} />
                     {
-                        this.isAuthorized() ?
-                            <div className="passcodeError">You are not authorized to use this app.</div> :
-                            <Chat user={this.state.user} ws={this.ws} />
+                        this.isAuthorized() ? <Chat user={this.state.user} ws={this.ws} />
+                            : <div className="passcodeError">You are not authorized to use this app.</div>
                     }
                 </div>
             </div>
@@ -43,7 +52,7 @@ class App extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        this.ws.run();
+        this.ws.run(this.checkConnection);
         this.getUser();
     }
 
