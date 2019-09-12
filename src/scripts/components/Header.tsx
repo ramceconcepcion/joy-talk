@@ -47,7 +47,7 @@ class Header extends React.Component<any, any>{
                         </div>
                 }
 
-                {/* <Menu /> */}
+                {/* <HeaderMenu show={false} /> */}
                 {<ThemePicker show={this.state.showThemeMenu} />}
             </div>
         )
@@ -60,9 +60,13 @@ class Header extends React.Component<any, any>{
     }
 }
 
-class Menu extends React.Component<any, any>{
+class HeaderMenu extends React.Component<any, any>{
     constructor(props) {
         super(props);
+
+        this.state = {
+            show: props.show
+        }
     }
 
     render() {
