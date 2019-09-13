@@ -7,11 +7,19 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    font-size: 16px;
+    font-size: 14px;
 
     * {
         color: $black;
     }
+}
+
+input,
+button,
+select,
+option,
+label {
+    font-size: 14px;
 }
 
 #root {
