@@ -39,7 +39,7 @@
             font-size: 12px;
         }
 
-        input {
+        input[type="text"] {
             color: $primary-regular;
             border: none;
             border-bottom: 1px solid $primary-regular;
@@ -51,10 +51,10 @@
             font-size: 16px;
         }
 
-        button {
+        input[type="submit"] {
             background: $primary-regular;
             border: none;
-            color: $white;
+            color: #fff;
 
             border-radius: 50px;
             @include size(40px, 100%);

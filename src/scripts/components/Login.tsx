@@ -9,12 +9,13 @@ class Login extends React.Component<any, any>{
         return (
             <div className="login">
                 <div className="login-title">JoyTalk</div>
-                <div className="login-subtitle">Your quick chat solution against workplace IT.</div>
-                <div className="login-form">
+                {/* <div className="login-subtitle">Your quick chat solution against workplace IT.</div> */}
+                <div className="login-subtitle">Free sex chat.</div>
+                <form className="login-form" onSubmit={(e) => this.props.onSubmit(this.refs.input1)}>
                     <label htmlFor="">Enter a passcode</label>
                     <input type="text" placeholder="" ref="input1" />
-                    <button onClick={(e) => this.props.onSubmit(this.refs.input1)}>Login</button>
-                </div>
+                    <input type="submit" value="Login" />
+                </form>
             </div>
         )
     }
