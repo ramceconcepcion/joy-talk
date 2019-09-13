@@ -39,10 +39,10 @@
             font-size: 12px;
         }
 
-        input[type="text"] {
+        .passcode {
             color: $primary-regular;
             border: none;
-            border-bottom: 1px solid $primary-regular;
+            border-bottom: 1px solid #ccc;
             background: transparent;
 
             @include size(40px, 100%);
@@ -50,7 +50,7 @@
             text-align: center;
         }
 
-        input[type="submit"] {
+        .submitLogin {
             background: $primary-regular;
             border: none;
             color: #fff;

@@ -19,22 +19,21 @@
 
     .login {
 
-        .login-title,
-        .login-subtitle {
+        .login-title {
             color: $regular;
         }
 
         .login-form {
-            label {
-                color: $regular;
-            }
+            // label {
+            //     color: $regular;
+            // }
 
-            input[type="text"] {
-                color: $regular;
-                border-bottom: 1px solid $regular;
-            }
+            // .passcode {
+            //     color: $regular;
+            //     border-bottom: 1px solid $regular;
+            // }
 
-            input[type="submit"] {
+            .submitLogin {
                 background: $regular;
             }
         }

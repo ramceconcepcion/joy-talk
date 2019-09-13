@@ -18,9 +18,9 @@ class Login extends React.Component<any, any>{
                 <div className="login-title">JoyTalk</div>
                 <div className="login-subtitle">Your quick chat solution against workplace IT.</div>
                 <form className="login-form" onSubmit={(evt) => this.submit(evt)}>
-                    <label htmlFor="">Enter a passcode</label>
-                    <input type="text" placeholder="" ref="input1" />
-                    <input type="submit" value="Login" />
+                    <label htmlFor="">Enter passcode:</label>
+                    <input className="passcode" type="password" placeholder="" ref="input1" />
+                    <input className="submitLogin" type="submit" value="Login" />
                 </form>
             </div>
         )
