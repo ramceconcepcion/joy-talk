@@ -16,9 +16,7 @@ class Chat extends React.Component<any, any> {
             chats: [],
         };
 
-        this.sendChat = this.sendChat.bind(this);
         this.receiveChat = this.receiveChat.bind(this);
-        this.createChat = this.createChat.bind(this);
     }
 
     scrollToBot() {
@@ -26,44 +24,16 @@ class Chat extends React.Component<any, any> {
         el.scrollTop = el.scrollHeight;
     }
 
-    createChat(content) {
-        return {
-            id: this.state.user.id,
-            name: this.state.user.name,
-            content: content,
-            timestamp: new Date().getTime()
-        }
-    }
-
-    sendChat(e) {
-        e.preventDefault();
-        const input: any = ReactDOM.findDOMNode(this.refs.msg);
-        const text = input.value.replace(/\s\s+/g, ' ');
-
-        if (text != " " && text != "") {
-            const data = this.createChat(text);
-            this.ws.send(data);
-        }
-
-        input.value = "";
-        this.changeTitle("Joy Talk");
-    }
 
     receiveChat(json) {
         const data = JSON.parse(json);
-        // if (data.id !== this.state.user.id) {
-        //     this.setState({ chats: this.state.chats.concat([data]) });
-        // }
+        const chats = this.state.chats;
+        chats.push(data);
 
-        this.setState({ chats: this.state.chats.concat([data]) });
+        this.setState({ chats });
         if (data.id != this.state.user.id) {
-            this.changeTitle("You have a new message!");
+            document.title = "You have a new message!";
         }
-    }
-
-
-    changeTitle(msg) {
-        document.title = msg;
     }
 
     render() {
@@ -73,7 +43,7 @@ class Chat extends React.Component<any, any> {
             <div className="chatroom">
                 <ul className="chats" ref="chats">
                     {
-                        <Welcome user={this.state.user} />
+                        <div className="chat-log" > {'Welcome to JoyTalk, ' + this.state.user.name}</div>
                     }
                     {
                         chats.map((chat, idx) =>
@@ -81,20 +51,14 @@ class Chat extends React.Component<any, any> {
                         )
                     }
                 </ul>
-                <form className="input" onSubmit={(e) => this.sendChat(e)}>
-                    <input type="text" ref="msg" placeholder="Type here..." />
-                    <input type="submit" id="submit" />
-                    <div className="sendimg" onClick={(e) => this.sendChat(e)}>
-                        <img src={sendicon} alt="" />
-                    </div>
-                </form>
+                <ChatInput ws={this.ws} user={this.state.user} />
             </div>
         );
     }
 
     componentDidMount() {
         this.scrollToBot();
-        this.ws.setReceive(this.receiveChat)
+        this.ws.setReceive(this.receiveChat);
     }
 
     componentDidUpdate() {
@@ -138,25 +102,54 @@ class Message extends React.Component<any, any> {
     }
 }
 
-class Welcome extends React.Component<any, any>{
+class ChatInput extends React.Component<any, any>{
+
     constructor(props) {
         super(props);
 
         this.state = {
-            user: props.user,
+            ws: props.ws,
+            user: props.user
+        }
+
+        this.sendChat = this.sendChat.bind(this);
+        this.createChat = this.createChat.bind(this);
+    }
+
+    createChat(content) {
+        return {
+            id: this.state.user.id,
+            name: this.state.user.name,
+            content: content,
+            timestamp: new Date().getTime()
         }
     }
 
-    getWelcome() {
-        return 'Welcome to JoyTalk, ' + this.state.user.name
+    sendChat(e) {
+        e.preventDefault();
+        const input: any = ReactDOM.findDOMNode(this.refs.msg);
+        const text = input.value.replace(/\s\s+/g, ' ');
+
+        if (text != " " && text != "") {
+            const data = this.createChat(text);
+            this.state.ws.send(data);
+        }
+
+        input.value = "";
+        document.title = "Joy Talk";
     }
 
-    public render() {
+    render() {
         return (
-            <div className="chat-log" > {this.getWelcome()}</div>
+            <form className="input" onSubmit={(e) => this.sendChat(e)}>
+                <input type="text" ref="msg" placeholder="Type here..." />
+                <input type="submit" id="submit" />
+                <div className="sendimg" onClick={(e) => this.sendChat(e)}>
+                    <img src={sendicon} alt="" />
+                </div>
+            </form>
         )
     }
 }
-
 
 export default Chat;

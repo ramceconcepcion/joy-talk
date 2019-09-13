@@ -19,14 +19,15 @@ body {
     min-height: 100vh;
 
     .container-wrapper {
-        @include size(auto, 100vw);
+        @include size(100vh, 100vw);
         min-height: 100vh;
 
         background: #313131;
         @include flex-row-nowrap(center, flex-start, flex-start);
 
         .app-window {
-            margin: 50px 0;
+            // margin: 50px 0;
+            min-width: $windowMinWidth;
             width: $windowWidth;
             height: $windowHeight;
             border-radius: 5px;

@@ -17,6 +17,7 @@
     z-index: 100;
 
     @include size(auto, 100%);
+    max-width: $windowMinWidth;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.9);
 
@@ -27,7 +28,7 @@
 
     .item {
         @include size(30px);
-        margin: 10px 19px;
+        margin: 10px 15px;
 
         cursor: pointer;
         @include flex-row-wrap(center, center, center);
