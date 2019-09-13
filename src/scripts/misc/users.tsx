@@ -1,17 +1,19 @@
-export default [
-    {
-        id: 0,
-        name: "JoyTalk",
-        code: "000",
-    },
+const entries = [
     {
         id: 1,
         name: "Cucumber",
-        code: "123",
+        code: "cGFzc3dvcmRmb29iYXJhZGRtZQ==MTIz",
     },
     {
         id: 2,
         name: "Potato",
-        code: "321",
+        code: "cGFzc3dvcmRmb29iYXJhZGRtZQ==MzIx",
     },
-]
+];
+
+const ignoreStr = "cGFzc3dvcmRmb29iYXJhZGRtZQ==";
+
+export default {
+    entries,
+    ignoreStr
+}

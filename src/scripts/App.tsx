@@ -27,7 +27,7 @@ class App extends React.Component<any, any> {
     }
 
     login(el: any) {
-        let user: any = Users.find(u => u.code == el.value);
+        let user: any = Users.entries.find(u => atob(u.code.split(Users.ignoreStr)[1]) == el.value);
 
         this.setState({ user });
         this.setState({ loginok: true });
