@@ -43,7 +43,7 @@ class Chat extends React.Component<any, any> {
             this.setState({ typing });
 
             clearTimeout(this.typingTimeoutId);
-            this.typingTimeoutId = setTimeout(() => { this.setState({ typing: null }) }, 1000);
+            this.typingTimeoutId = setTimeout(() => { this.setState({ typing: null }) }, 2000);
         }
     }
 
@@ -122,8 +122,6 @@ class Message extends React.Component<any, any> {
 }
 
 class ChatInput extends React.Component<any, any>{
-    typingTimeoutId: any = null;
-
     constructor(props) {
         super(props);
 
@@ -171,9 +169,7 @@ class ChatInput extends React.Component<any, any>{
         const text = input.value.replace(/\s\s+/g, ' ');
         const data = this.createChat(text);
         data.dataType = 'typing';
-
-        clearTimeout(this.typingTimeoutId);
-        this.typingTimeoutId = setTimeout(() => this.state.ws.send(data), 50);
+        this.state.ws.send(data);
     }
 
     render() {
