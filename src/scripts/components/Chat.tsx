@@ -5,7 +5,7 @@ import sendicon from '../../icons/send.svg';
 
 class Chat extends React.Component<any, any> {
     ws: any;
-    notifyTimeoutId: any;
+    typingTimeoutId: any;
 
     constructor(props) {
         super(props);
@@ -14,19 +14,20 @@ class Chat extends React.Component<any, any> {
         this.state = {
             user: props.user,
             chats: [],
+            typing: null,
         };
 
+        this.onWsReceive = this.onWsReceive.bind(this);
         this.receiveChat = this.receiveChat.bind(this);
+        this.showTyping = this.showTyping.bind(this);
     }
 
-    scrollToBot() {
+    scrollToBottom() {
         const el: any = ReactDOM.findDOMNode(this.refs.chats);
         el.scrollTop = el.scrollHeight;
     }
 
-
-    receiveChat(json) {
-        const data = JSON.parse(json);
+    receiveChat(data) {
         const chats = this.state.chats;
         chats.push(data);
 
@@ -36,6 +37,23 @@ class Chat extends React.Component<any, any> {
         }
     }
 
+    showTyping(data) {
+        if (data.id != this.state.user.id) {
+            const typing = { name: data.name }
+            this.setState({ typing });
+
+            clearTimeout(this.typingTimeoutId);
+            this.typingTimeoutId = setTimeout(() => { this.setState({ typing: null }) }, 1000);
+        }
+    }
+
+    onWsReceive(json) {
+        const data = JSON.parse(json);
+
+        if (data.dataType == "message") this.receiveChat(data);
+        if (data.dataType == "typing") this.showTyping(data);
+    }
+
     render() {
         const { chats }: any = this.state;
 
@@ -43,13 +61,14 @@ class Chat extends React.Component<any, any> {
             <div className="chatroom">
                 <ul className="chats" ref="chats">
                     {
-                        <div className="chat-log" > {'Welcome to JoyTalk, ' + this.state.user.name}</div>
+                        <div className="chat-log">{'Welcome to JoyTalk, ' + this.state.user.name}</div>
                     }
                     {
                         chats.map((chat, idx) =>
                             <Message chat={chat} user={this.state.user.name} key={idx} />
                         )
                     }
+                    {this.state.typing ? <div className="chat-log">{this.state.typing.name + ' is typing...'}</div> : null}
                 </ul>
                 <ChatInput ws={this.ws} user={this.state.user} />
             </div>
@@ -57,12 +76,12 @@ class Chat extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        this.scrollToBot();
-        this.ws.setReceive(this.receiveChat);
+        this.scrollToBottom();
+        this.ws.setReceive(this.onWsReceive);
     }
 
     componentDidUpdate() {
-        this.scrollToBot();
+        this.scrollToBottom();
     }
 }
 
@@ -103,6 +122,7 @@ class Message extends React.Component<any, any> {
 }
 
 class ChatInput extends React.Component<any, any>{
+    typingTimeoutId: any = null;
 
     constructor(props) {
         super(props);
@@ -114,6 +134,7 @@ class ChatInput extends React.Component<any, any>{
 
         this.sendChat = this.sendChat.bind(this);
         this.createChat = this.createChat.bind(this);
+        this.typingChat = this.typingChat.bind(this);
     }
 
     getStyle(): any {
@@ -126,7 +147,8 @@ class ChatInput extends React.Component<any, any>{
             id: this.state.user.id,
             name: this.state.user.name,
             content: content,
-            timestamp: new Date().getTime()
+            timestamp: new Date().getTime(),
+            dataType: 'message',
         }
     }
 
@@ -144,10 +166,20 @@ class ChatInput extends React.Component<any, any>{
         document.title = "Joy Talk";
     }
 
+    typingChat(e) {
+        const input: any = ReactDOM.findDOMNode(this.refs.msg);
+        const text = input.value.replace(/\s\s+/g, ' ');
+        const data = this.createChat(text);
+        data.dataType = 'typing';
+
+        clearTimeout(this.typingTimeoutId);
+        this.typingTimeoutId = setTimeout(() => this.state.ws.send(data), 50);
+    }
+
     render() {
         return (
             <form className="input" onSubmit={(e) => this.sendChat(e)} style={this.getStyle()}>
-                <input type="text" ref="msg" placeholder="Type here..." />
+                <input type="text" ref="msg" placeholder="Type here..." onInput={e => this.typingChat(e)} />
                 <input type="submit" id="submit" />
                 <div className="sendimg" onClick={(e) => this.sendChat(e)}>
                     <img src={sendicon} alt="" />

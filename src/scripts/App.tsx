@@ -22,7 +22,7 @@ class App extends React.Component<any, any> {
             loginok: false,
         }
 
-        this.checkConnection = this.checkConnection.bind(this);
+        this.runCallback = this.runCallback.bind(this);
         this.login = this.login.bind(this);
     }
 
@@ -32,16 +32,12 @@ class App extends React.Component<any, any> {
         this.setState({ user });
         this.setState({ loginok: true });
 
-        if (user) this.ws.run(this.checkConnection);
+        if (user) this.ws.run(this.runCallback);
     }
 
-    checkConnection(connected, ws) {
+    runCallback(connected, ws) {
         this.setState({ connection: connected });
-        this.setState({ ws })
-    }
-
-    applyThemeFromLocal() {
-        document.body.className = localStorage['joytalk_theme'] || 'primary';
+        this.setState({ ws });
     }
 
     public render() {
@@ -67,7 +63,8 @@ class App extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        this.applyThemeFromLocal();
+        //Apply theme from localStorage
+        document.body.className = localStorage['joytalk_theme'] || 'deeporange';
     }
 }
 
