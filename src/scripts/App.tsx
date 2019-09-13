@@ -7,7 +7,7 @@ import WebSocket from './misc/websocket';
 //Components
 import Chat from './components/Chat';
 import Header from './components/Header';
-
+import Login from './components/Login';
 
 class App extends React.Component<any, any> {
     ws: any = WebSocket;
@@ -18,20 +18,21 @@ class App extends React.Component<any, any> {
         this.state = {
             user: null,
             connection: false,
-            ws: this.ws
+            ws: this.ws,
+            loginok: false,
         }
 
         this.checkConnection = this.checkConnection.bind(this);
+        this.login = this.login.bind(this);
     }
 
-    getUser() {
-        const code = prompt("Enter passcode: ");
-        let user: any = Users.find(u => u.code == code);
+    login(el: any) {
+        let user: any = Users.find(u => u.code == el.value);
+
         this.setState({ user });
-    }
+        this.setState({ loginok: true });
 
-    isAuthorized() {
-        return !this.state.user ? false : true
+        if (user) this.ws.run(this.checkConnection);
     }
 
     checkConnection(connected, ws) {
@@ -44,22 +45,25 @@ class App extends React.Component<any, any> {
     }
 
     public render() {
+        const checkLogin = () => {
+            return !this.state.user ?
+                <div className="passcodeError">You are not authorized to use this app.</div>
+                :
+                <Chat user={this.state.user} ws={this.state.ws} />
+        }
+
         return (
             <div className="container-wrapper">
                 <div className="app-window">
+                    {this.state.loginok ? null : <Login onSubmit={el => this.login(el)} />}
                     <Header user={this.state.user} connection={this.state.connection} />
-                    {
-                        this.isAuthorized() ? <Chat user={this.state.user} ws={this.state.ws} />
-                            : <div className="passcodeError">You are not authorized to use this app.</div>
-                    }
+                    {checkLogin()}
                 </div>
             </div>
         )
     }
 
     componentWillMount() {
-        this.ws.run(this.checkConnection);
-        this.getUser();
     }
 
     componentDidMount() {

@@ -57,6 +57,10 @@ class Header extends React.Component<any, any>{
         if (prevProps.connection != this.props.connection) {
             this.setState({ connection: this.props.connection });
         }
+
+        if (prevProps.user != this.props.user) {
+            this.setState({ user: this.props.user });
+        }
     }
 }
 

@@ -15,21 +15,21 @@ body {
 }
 
 #root {
-    @include size(auto, 100vw);
+    @include size(100vh, 100vw);
+    max-height: 100vh;
     min-height: 100vh;
 
     .container-wrapper {
-        @include size(100vh, 100vw);
-        min-height: 100vh;
+        @include size(100%, 100%);
 
         background: #313131;
         @include flex-row-nowrap(center, flex-start, flex-start);
 
         .app-window {
             // margin: 50px 0;
+            @include size($windowHeight, $windowWidth);
             min-width: $windowMinWidth;
-            width: $windowWidth;
-            height: $windowHeight;
+
             border-radius: 5px;
             overflow: hidden;
             position: relative;

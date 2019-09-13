@@ -116,6 +116,11 @@ class ChatInput extends React.Component<any, any>{
         this.createChat = this.createChat.bind(this);
     }
 
+    getStyle(): any {
+        if (!this.state.ws.connected) return { opacity: 0.6, pointerEvents: "none" };
+        else return { opacity: 1, pointerEvents: "initial" };
+    }
+
     createChat(content) {
         return {
             id: this.state.user.id,
@@ -141,7 +146,7 @@ class ChatInput extends React.Component<any, any>{
 
     render() {
         return (
-            <form className="input" onSubmit={(e) => this.sendChat(e)}>
+            <form className="input" onSubmit={(e) => this.sendChat(e)} style={this.getStyle()}>
                 <input type="text" ref="msg" placeholder="Type here..." />
                 <input type="submit" id="submit" />
                 <div className="sendimg" onClick={(e) => this.sendChat(e)}>
@@ -150,6 +155,8 @@ class ChatInput extends React.Component<any, any>{
             </form>
         )
     }
+
+
 }
 
 export default Chat;

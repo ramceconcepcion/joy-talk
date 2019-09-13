@@ -8,6 +8,8 @@ export default {
     receiveCallback: null,
     runCallback: null,
 
+    connected: false,
+
     getHost() {
         return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
     },
@@ -19,12 +21,14 @@ export default {
 
         this.ws.onopen = () => {
             console.log('Connected to server.');
-            this.runCallback(true, this);
+            this.connected = true;
+            this.runCallback(this.connected, this);
         }
 
         this.ws.onclose = () => {
             console.log('Disconnected to server');
-            this.runCallback(false, this);
+            this.connected = false;
+            this.runCallback(this.connected, this);
             this.run(this.runCallback)
         }
 

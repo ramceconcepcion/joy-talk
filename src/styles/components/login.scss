@@ -1,0 +1,67 @@
+.login {
+    @include size(100%);
+    flex: 0 0 auto;
+
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+
+    background: #fdfdfd;
+
+    @include flex-col-nowrap(center, center, center);
+
+    .login-title {
+        font-family: "Pacifico", cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: $primary-regular;
+
+        font-size: 30px;
+    }
+
+    .login-subtitle {
+        margin: 5px 0 0 0;
+        font-family: "cursive";
+        color: $primary-regular;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .login-form {
+        margin-top: 50px;
+        width: 70%;
+        min-width: $windowMinWidth;
+        max-width: 400px;
+
+        @include flex-col-nowrap(center, center, center);
+
+        label {
+            color: $primary-regular;
+            width: 100%;
+            font-size: 12px;
+        }
+
+        input {
+            color: $primary-regular;
+            border: none;
+            border-bottom: 1px solid $primary-regular;
+            background: transparent;
+
+            @include size(40px, 100%);
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        button {
+            background: $primary-regular;
+            border: none;
+            color: $white;
+
+            border-radius: 50px;
+            @include size(40px, 100%);
+            font-size: 16px;
+            margin-top: 30px;
+            cursor: pointer;
+            outline: none;
+        }
+    }
+}

@@ -1,13 +1,21 @@
 import React from 'react';
-import Users from '../misc/users';
-
 
 class Login extends React.Component<any, any>{
-
+    constructor(props) {
+        super(props);
+    }
 
     render() {
         return (
-            <div></div>
+            <div className="login">
+                <div className="login-title">JoyTalk</div>
+                <div className="login-subtitle">Your quick chat solution against workplace IT.</div>
+                <div className="login-form">
+                    <label htmlFor="">Enter a passcode</label>
+                    <input type="text" placeholder="" ref="input1" />
+                    <button onClick={(e) => this.props.onSubmit(this.refs.input1)}>Login</button>
+                </div>
+            </div>
         )
     }
 }

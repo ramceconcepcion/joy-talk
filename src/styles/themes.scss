@@ -16,6 +16,29 @@
             background: $regular;
         }
     }
+
+    .login {
+
+        .login-title,
+        .login-subtitle {
+            color: $regular;
+        }
+
+        .login-form {
+            label {
+                color: $regular;
+            }
+
+            input {
+                color: $regular;
+                border-bottom: 1px solid $regular;
+            }
+
+            button {
+                background: $regular;
+            }
+        }
+    }
 }
 
 html {
