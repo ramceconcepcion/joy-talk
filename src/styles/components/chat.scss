@@ -1,6 +1,7 @@
 .chatroom {
     @include size(calc(100% - #{$headerHeight}), 100%);
 
+    flex: 0 0 auto;
     height: 100%;
 
     .chat-log {
@@ -13,7 +14,7 @@
 
     .chats {
         box-sizing: border-box;
-        padding: 10px;
+        padding: 0 10px;
         margin: 10px 0;
         height: calc(100% - 100px);
         width: 100%;
