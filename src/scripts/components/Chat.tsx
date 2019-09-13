@@ -34,10 +34,10 @@ class Chat extends React.Component<any, any> {
         chats.push(data);
 
         this.setState({ chats });
-        this.setState({ typing: null });
 
         if (data.id != this.state.user.id) {
             document.title = "You have a new message!";
+            this.setState({ typing: null });
         }
     }
 
