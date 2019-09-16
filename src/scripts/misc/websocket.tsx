@@ -1,6 +1,6 @@
 export default {
     HOST_prod: 'wss://joytalk-server.herokuapp.com',
-    HOST_dev: 'wss://localhost:8080/chat',
+    HOST_dev: 'wss://localhost:8000',
     mode: 'prod',
 
     WebSocketInstance: null,
@@ -14,7 +14,7 @@ export default {
     },
 
     run() {
-        this.WebSocketInstance = io.connect(this.getHost());
+        this.WebSocketInstance = new WebSocket(this.getHost());
 
         this.WebSocketInstance.onopen = () => {
             console.log('Connected to server.');
@@ -43,17 +43,5 @@ export default {
 
     send(data) {
         this.WebSocketInstance.send(JSON.stringify(data))
-    },
-
-    sendChat(data) {
-
-    },
-
-    sendTyping(data) {
-
-    },
-
-    sendUser(data) {
-
-    },
+    }
 }
