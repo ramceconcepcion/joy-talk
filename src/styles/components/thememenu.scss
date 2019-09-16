@@ -56,9 +56,9 @@
             }
         }
 
-        &[data-value="gray"] {
+        &[data-value="brown"] {
             &::after {
-                background: $gray-regular;
+                background: $brown-regular;
             }
         }
 

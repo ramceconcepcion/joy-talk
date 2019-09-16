@@ -23,7 +23,7 @@ class ThemePicker extends React.Component<any, any>{
     }
 
     render() {
-        const colors = ['primary', 'gray', 'purple', 'deeppurple', 'pink', 'red', 'indigo', 'lightblue', 'cyan',
+        const colors = ['primary', 'brown', 'purple', 'deeppurple', 'pink', 'red', 'indigo', 'lightblue', 'cyan',
             'teal', 'orange', 'deeporange', 'bluegrey', 'green', 'lime'];
 
         return (

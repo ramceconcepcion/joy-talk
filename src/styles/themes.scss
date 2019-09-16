@@ -41,8 +41,8 @@
 }
 
 html {
-    .gray {
-        @include applyTheme($gray-regular);
+    .brown {
+        @include applyTheme($brown-regular);
     }
 
     .purple {
