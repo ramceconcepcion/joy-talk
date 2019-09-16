@@ -27,7 +27,6 @@ class Chat extends React.Component<any, any> {
         const func = () => {
             const el: any = ReactDOM.findDOMNode(this.refs.chats);
             el.scrollTop = el.scrollHeight;
-            console.log('scroll to bottom');
         }
 
         clearTimeout(this.scrollToBottomTimeoutId);
