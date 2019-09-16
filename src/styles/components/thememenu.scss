@@ -1,15 +1,3 @@
-@keyframes pulldown {
-    from {
-        top: 0px;
-        opacity: 0;
-    }
-
-    to {
-        top: $headerHeight;
-        opacity: 1;
-    }
-}
-
 .theme-menu {
     position: absolute;
     top: $headerHeight;

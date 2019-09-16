@@ -20,6 +20,8 @@ class ThemePicker extends React.Component<any, any>{
     applyTheme(el) {
         document.body.className = el.getAttribute('data-value');
         localStorage['joytalk_theme'] = el.getAttribute('data-value');
+
+        this.props.close();
     }
 
     render() {

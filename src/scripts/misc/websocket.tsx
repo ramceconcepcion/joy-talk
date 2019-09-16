@@ -3,48 +3,45 @@ export default {
     HOST_dev: 'wss://localhost:8000',
     mode: 'prod',
 
-    ws: null,
+    WebSocketInstance: null,
+    connected: false,
 
     receiveCallback: null,
     runCallback: null,
-
-    connected: false,
 
     getHost() {
         return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
     },
 
-    run(callback) {
-        var HOST = this.getHost();
-        this.ws = new WebSocket(HOST);
-        this.runCallback = callback;
+    run() {
+        this.WebSocketInstance = new WebSocket(this.getHost());
 
-        this.ws.onopen = () => {
+        this.WebSocketInstance.onopen = () => {
             console.log('Connected to server.');
             this.connected = true;
-            this.runCallback(this.connected, this);
+            if (this.runCallback) this.runCallback(this.connected);
         }
 
-        this.ws.onclose = () => {
+        this.WebSocketInstance.onclose = () => {
             console.log('Disconnected to server');
             this.connected = false;
-            this.runCallback(this.connected, this);
-            this.run(this.runCallback)
+            if (this.runCallback) this.runCallback(this.connected);
+            this.run();
         }
 
-        this.ws.onmessage = (event) => {
+        this.WebSocketInstance.onmessage = (event) => {
             if (this.receiveCallback) this.receiveCallback(event.data);
         };
     },
 
     setReceive(callback) {
         this.receiveCallback = callback;
-        this.ws.onmessage = (event) => {
+        this.WebSocketInstance.onmessage = (event) => {
             this.receiveCallback(event.data);
         };
     },
 
     send(data) {
-        this.ws.send(JSON.stringify(data))
+        this.WebSocketInstance.send(JSON.stringify(data))
     }
 }

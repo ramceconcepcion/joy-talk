@@ -31,7 +31,6 @@ class ChatInput extends React.Component<any, any>{
             name: this.state.user.name,
             content: content,
             timestamp: new Date().getTime(),
-            dataType: 'message',
         }
     }
 
@@ -42,7 +41,7 @@ class ChatInput extends React.Component<any, any>{
 
         if (text != " " && text != "") {
             const data = this.createChat(text);
-            this.state.ws.send(data);
+            this.state.ws.send({ dataType: "message", data: data });
         }
 
         input.value = "";
@@ -53,11 +52,10 @@ class ChatInput extends React.Component<any, any>{
         const input: any = ReactDOM.findDOMNode(this.refs.msg);
         const text = input.value.replace(/\s\s+/g, ' ');
         const data = this.createChat(text);
-        data.dataType = 'typing';
         data.content = '';
 
         clearTimeout(this.typingTimeoutId);
-        this.typingTimeoutId = setTimeout(() => { this.state.ws.send(data); }, 50);
+        this.typingTimeoutId = setTimeout(() => { this.state.ws.send({ dataType: "typing", data: data }); }, 50);
     }
 
     allowNewLine(e) {

@@ -21,6 +21,7 @@
         left: 10px;
         @include size(10px);
         border-radius: 100%;
+        cursor: pointer;
 
         &.connected {
             background: #06cc25;

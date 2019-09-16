@@ -1,0 +1,45 @@
+.members {
+    position: absolute;
+    top: $headerHeight;
+    left: 0;
+    z-index: 100;
+
+    padding: 10px 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    box-sizing: border-box;
+    @include flex-col-nowrap(flex-start, flex-start, flex-start);
+
+    animation: pulldown 200ms ease;
+
+    .member-item {
+        @include size(20px, 100%);
+        max-width: $windowMinWidth;
+
+        @include flex-row-nowrap(flex-start, center, flex-start);
+
+        .status {
+            display: block;
+            @include size(10px);
+            border-radius: 100%;
+            cursor: pointer;
+            background: #ff3939;
+
+            &.connected {
+                background: #06cc25;
+            }
+
+            &.disconnected {
+                background: #ff3939;
+            }
+        }
+
+        .name {
+            display: block;
+            margin-left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
