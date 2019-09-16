@@ -54,7 +54,7 @@ class Chat extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps) {
-        this.scrollToBottom();
+        //this.scrollToBottom();
 
         if (!arraysEqual(prevProps.chats, this.props.chats)) {
             this.setState({ chats: this.props.chats });
