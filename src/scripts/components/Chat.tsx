@@ -54,13 +54,13 @@ class Chat extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps) {
-        this.scrollToBottom();
-
         if (!arraysEqual(prevProps.chats, this.props.chats)) {
             this.setState({ chats: this.props.chats });
+            this.scrollToBottom();
         }
         if (prevProps.typing != this.props.typing) {
             this.setState({ typing: this.props.typing });
+            this.scrollToBottom();
         }
     }
 }
