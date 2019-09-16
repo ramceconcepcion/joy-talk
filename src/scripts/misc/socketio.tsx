@@ -1,3 +1,5 @@
+import io from 'socket.io-client';
+
 export default {
     HOST_prod: 'wss://joytalk-server.herokuapp.com',
     HOST_dev: 'wss://localhost:8080/chat',
