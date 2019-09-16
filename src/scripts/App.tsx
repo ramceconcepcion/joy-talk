@@ -10,7 +10,6 @@ import Header from './components/Header';
 import Login from './components/Login';
 
 class App extends React.Component<any, any> {
-    ws: any = WebSocket;
 
     constructor(props) {
         super(props);
@@ -18,7 +17,7 @@ class App extends React.Component<any, any> {
         this.state = {
             user: null,
             connection: false,
-            ws: this.ws,
+            ws: WebSocket,
             loginok: false,
         }
 
@@ -32,7 +31,7 @@ class App extends React.Component<any, any> {
         this.setState({ user });
         this.setState({ loginok: true });
 
-        if (user) this.ws.run(this.runCallback);
+        if (user) this.state.ws.run(this.runCallback);
     }
 
     runCallback(connected, ws) {
