@@ -8,22 +8,30 @@ import ChatInput from './ChatInput';
 import TypingIndicator from './TypingIndicator';
 
 class Chat extends React.Component<any, any> {
-    ws: any;
+    scrollToBottomTimeoutId: any = null;
 
     constructor(props) {
         super(props);
 
-        this.ws = props.ws;
         this.state = {
+            ws: props.ws,
             user: props.user,
             chats: props.chats,
             typing: props.typing,
         };
+
+        this.scrollToBottom = this.scrollToBottom.bind(this);
     }
 
     scrollToBottom() {
-        const el: any = ReactDOM.findDOMNode(this.refs.chats);
-        el.scrollTop = el.scrollHeight;
+        const func = () => {
+            const el: any = ReactDOM.findDOMNode(this.refs.chats);
+            el.scrollTop = el.scrollHeight;
+            console.log('scroll to bottom');
+        }
+
+        clearTimeout(this.scrollToBottomTimeoutId);
+        this.scrollToBottomTimeoutId = setTimeout(func, 500);
     }
 
     render() {
@@ -44,7 +52,7 @@ class Chat extends React.Component<any, any> {
                         <TypingIndicator user={this.state.typing} />
                     }
                 </ul>
-                <ChatInput ws={this.ws} user={this.state.user} />
+                <ChatInput ws={this.state.ws} user={this.state.user} />
             </div>
         );
     }
@@ -54,13 +62,13 @@ class Chat extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps) {
+        this.scrollToBottom();
+
         if (!arraysEqual(prevProps.chats, this.props.chats)) {
             this.setState({ chats: this.props.chats });
-            this.scrollToBottom();
         }
         if (prevProps.typing != this.props.typing) {
             this.setState({ typing: this.props.typing });
-            this.scrollToBottom();
         }
     }
 }
