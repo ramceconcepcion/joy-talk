@@ -24,23 +24,7 @@ class App extends React.Component<any, any> {
             userBroadcastTimeoutId: null,
 
             //chats
-            chats: [
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-                { id: 10, name: 'a', content: 'a' },
-            ],
+            chats: [],
             typing: null,
             typingTimeoutId: null,
 
