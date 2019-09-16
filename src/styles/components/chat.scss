@@ -63,6 +63,8 @@
 
             .message {
                 margin: 0 !important;
+                word-break: break-word;
+                white-space: pre-wrap;
 
                 &:hover~.date {
                     display: block;
@@ -71,6 +73,8 @@
                 span {
                     display: block;
                     color: $white;
+                    min-height: 16px;
+                    word-break: break-word;
                 }
             }
 
