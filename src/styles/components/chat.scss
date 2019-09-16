@@ -32,7 +32,7 @@
             list-style: none;
             margin: 10px 0;
             max-width: 200px;
-            word-break: break-word;
+            word-wrap: break-word;
             white-space: pre-line;
 
             &.right {
@@ -72,7 +72,7 @@
                     display: block;
                     color: $white;
                     min-height: 16px;
-                    word-break: break-all;
+                    word-wrap: break-word;
                     word-break: break-word;
                 }
             }
