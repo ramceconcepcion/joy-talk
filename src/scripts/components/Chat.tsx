@@ -30,7 +30,7 @@ class Chat extends React.Component<any, any> {
         const { chats }: any = this.state;
 
         return (
-            <div className="chatroom">
+            <div className="chat-wrapper">
                 <ul className="chats" ref="chats">
                     {
                         <div className="welcome">{'Welcome to JoyTalk, ' + this.state.user.name}</div>
@@ -54,7 +54,7 @@ class Chat extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps) {
-        //this.scrollToBottom();
+        this.scrollToBottom();
 
         if (!arraysEqual(prevProps.chats, this.props.chats)) {
             this.setState({ chats: this.props.chats });

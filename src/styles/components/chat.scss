@@ -1,4 +1,4 @@
-.chatroom {
+.chat-wrapper {
     @include size(calc(100% - #{$headerHeight}), 100%);
 
     flex: 0 0 auto;
