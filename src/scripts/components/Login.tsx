@@ -25,6 +25,11 @@ class Login extends React.Component<any, any>{
             </div>
         )
     }
+
+    componentDidMount() {
+        const input: any = this.refs.input1;
+        input.focus();
+    }
 }
 
 

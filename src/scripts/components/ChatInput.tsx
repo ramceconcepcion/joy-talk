@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import sendicon from '../../icons/send.svg';
+import { throwStatement } from '@babel/types';
 
 class ChatInput extends React.Component<any, any>{
     typingTimeoutId: any;
@@ -37,7 +38,7 @@ class ChatInput extends React.Component<any, any>{
     sendChat(e) {
         e.preventDefault();
         const input: any = ReactDOM.findDOMNode(this.refs.msg);
-        const text = input.value.replace(/\s\s+/g, ' ');
+        const text = input.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
         if (text != " " && text != "") {
             const data = this.createChat(text);
@@ -59,11 +60,20 @@ class ChatInput extends React.Component<any, any>{
         this.typingTimeoutId = setTimeout(() => { this.state.ws.send(data); }, 50);
     }
 
+    allowNewLine(e) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            e.preventDefault();
+            this.sendChat(e);
+        }
+    }
+
     render() {
         return (
             <form className="input" onSubmit={(e) => this.sendChat(e)} style={this.getStyle()}>
-                <input type="text" ref="msg" placeholder="Type here..." onInput={e => this.typingChat(e)} />
-                <input type="submit" id="submit" />
+                <textarea className="msgbox" ref="msg" placeholder="Type here..."
+                    onKeyDown={e => this.allowNewLine(e)}
+                    onInput={e => this.typingChat(e)} />
+                <input className="submitbtn" type="submit" />
                 <div className="sendimg" onClick={(e) => this.sendChat(e)}>
                     <img src={sendicon} alt="" />
                 </div>

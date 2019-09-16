@@ -30,7 +30,9 @@ class ChatMessage extends React.Component<any, any> {
         return (
             <li className={`chat ${this.state.user === this.state.chat.name ? "right" : "left"}`}>
                 <span className="username">{this.state.chat.name}</span>
-                <p className="message">{this.state.chat.content}</p>
+                <p className="message">{
+                    this.state.chat.content.split('<br/>').map((c, i) => <span key={i}>{c}</span>)
+                }</p>
                 <span className="date">{this.getTime()}</span>
             </li>
         )

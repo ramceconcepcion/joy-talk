@@ -63,10 +63,14 @@
 
             .message {
                 margin: 0 !important;
-                color: $white;
 
                 &:hover~.date {
                     display: block;
+                }
+
+                span {
+                    display: block;
+                    color: $white;
                 }
             }
 
@@ -97,29 +101,37 @@
     }
 
     .input {
-        // position: absolute;
-        // bottom: 0;
+        position: absolute;
+        bottom: 0;
         padding: 5px;
-        height: 40px;
-        width: 100%;
+        @include size(auto, 100%);
+        min-height: 40px;
+        max-height: 80px;
         background: $primary-regular;
 
         @include flex-row-nowrap(flex-start, center, flex-start);
         box-sizing: border-box;
+        white-space: pre-wrap;
 
-        input[type="text"] {
+        .msgbox {
             background: rgba(255, 255, 255, 0.8);
             outline: 0;
             border: none;
             border-radius: 50px;
-            padding: 0 40px 0 10px;
-            height: 30px;
-            width: 100%;
+            padding: 7px 40px 0px 10px;
+
+            @include size(30px, 100%);
+            min-height: 30px;
+            max-height: 60px;
 
             box-sizing: border-box;
+            resize: none;
+            white-space: pre-wrap;
+
+            @extend %invisible-scroll-bar;
         }
 
-        input[type="submit"] {
+        .submitbtn {
             display: none;
         }
 
