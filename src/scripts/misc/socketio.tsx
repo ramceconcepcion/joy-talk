@@ -48,14 +48,14 @@ export default {
     },
 
     sendChat(data) {
-
+        this.WebSocketInstance.emit('chat', JSON.stringify(data));
     },
 
     sendTyping(data) {
-
+        this.WebSocketInstance.emit('typing', JSON.stringify(data));
     },
 
     sendUser(data) {
-
+        this.WebSocketInstance.emit('user', JSON.stringify(data));
     },
 }
