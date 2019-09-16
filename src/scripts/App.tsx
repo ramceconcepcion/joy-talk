@@ -24,7 +24,23 @@ class App extends React.Component<any, any> {
             userBroadcastTimeoutId: null,
 
             //chats
-            chats: [],
+            chats: [
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+                { id: 10, name: 'a', content: 'a' },
+            ],
             typing: null,
             typingTimeoutId: null,
 
@@ -64,7 +80,7 @@ class App extends React.Component<any, any> {
         setTimeout(() => {
             this.state.ws.send({ dataType: "user", data: this.state.user });
             this.broadcastUserStatus();
-        }, 2000);
+        }, 5000);
     }
 
     receiveWsCallback(json) {
@@ -97,12 +113,18 @@ class App extends React.Component<any, any> {
     receiveStatus(data) {
         if (data.id != this.state.user.id) {
             const user = this.state.users.find(u => u.id === data.id);
-            user.status = true;
+
+            if (!user.status) {
+                user.status = true;
+                this.setState({ users: this.state.users });
+            }
 
             clearTimeout(user.connectionTimeoutId);
-            user.connectionTimeoutId = setTimeout(() => { user.status = false }, 3000);
+            user.connectionTimeoutId = setTimeout(() => {
+                user.status = false;
+                this.setState({ users: this.state.users });
+            }, 6000);
 
-            this.setState({ users: this.state.users });
         }
     }
 
