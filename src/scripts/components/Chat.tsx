@@ -31,7 +31,7 @@ class Chat extends React.Component<any, any> {
         }
 
         clearTimeout(this.scrollToBottomTimeoutId);
-        this.scrollToBottomTimeoutId = setTimeout(func, 500);
+        this.scrollToBottomTimeoutId = setTimeout(func, 100);
     }
 
     render() {
