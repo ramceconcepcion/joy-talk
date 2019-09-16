@@ -36,7 +36,7 @@ class Chat extends React.Component<any, any> {
         this.setState({ chats });
 
         if (data.id != this.state.user.id) {
-            document.title = "You have a new message!";
+            document.title = data.name + " sent a new message!";
             this.setState({ typing: null });
         }
     }
