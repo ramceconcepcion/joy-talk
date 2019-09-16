@@ -41,7 +41,7 @@ class ChatInput extends React.Component<any, any>{
 
         if (text != " " && text != "") {
             const data = this.createChat(text);
-            this.state.ws.send({ dataType: "message", data: data });
+            this.state.ws.sendChat(data);
         }
 
         input.value = "";
@@ -55,7 +55,7 @@ class ChatInput extends React.Component<any, any>{
         data.content = '';
 
         clearTimeout(this.typingTimeoutId);
-        this.typingTimeoutId = setTimeout(() => { this.state.ws.send({ dataType: "typing", data: data }); }, 100);
+        this.typingTimeoutId = setTimeout(() => { this.state.ws.sendTyping(data); }, 100);
     }
 
     allowNewLine(e) {

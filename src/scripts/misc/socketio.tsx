@@ -2,14 +2,18 @@ import io from 'socket.io-client';
 
 export default {
     HOST_prod: 'wss://joytalk-server.herokuapp.com',
-    HOST_dev: 'wss://localhost:8080/chat',
-    mode: 'prod',
+    HOST_dev: 'ws://localhost:8080',
+    mode: 'dev',
 
     WebSocketInstance: null,
     connected: false,
 
     receiveCallback: null,
     runCallback: null,
+
+    receiveChatCallback: null,
+    receiveTypingCallback: null,
+    receiveUserCallback: null,
 
     getHost() {
         return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
@@ -18,44 +22,42 @@ export default {
     run() {
         this.WebSocketInstance = io.connect(this.getHost());
 
-        this.WebSocketInstance.onopen = () => {
+        this.WebSocketInstance.on('connect', () => {
             console.log('Connected to server.');
             this.connected = true;
             if (this.runCallback) this.runCallback(this.connected);
-        }
+        });
 
-        this.WebSocketInstance.onclose = () => {
+        this.WebSocketInstance.on('message', data => {
+            if (this.receiveChatCallback) this.receiveChatCallback(data);
+        });
+
+        this.WebSocketInstance.on('typing', data => {
+            if (this.receiveTypingCallback) this.receiveTypingCallback(data);
+        });
+
+        this.WebSocketInstance.on('user', data => {
+            if (this.receiveUserCallback) this.receiveUserCallback(data);
+        });
+
+        this.WebSocketInstance.on('disconnect', data => {
             console.log('Disconnected to server');
+
             this.connected = false;
             if (this.runCallback) this.runCallback(this.connected);
             this.run();
-        }
-
-        this.WebSocketInstance.onmessage = (event) => {
-            if (this.receiveCallback) this.receiveCallback(event.data);
-        };
-    },
-
-    setReceive(callback) {
-        this.receiveCallback = callback;
-        this.WebSocketInstance.onmessage = (event) => {
-            this.receiveCallback(event.data);
-        };
-    },
-
-    send(data) {
-        this.WebSocketInstance.send(JSON.stringify(data))
+        });
     },
 
     sendChat(data) {
-        this.WebSocketInstance.emit('chat', JSON.stringify(data));
+        this.WebSocketInstance.emit('message', data);
     },
 
     sendTyping(data) {
-        this.WebSocketInstance.emit('typing', JSON.stringify(data));
+        this.WebSocketInstance.emit('typing', data);
     },
 
     sendUser(data) {
-        this.WebSocketInstance.emit('user', JSON.stringify(data));
+        this.WebSocketInstance.emit('user', data);
     },
 }

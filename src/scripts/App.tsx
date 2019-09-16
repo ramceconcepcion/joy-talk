@@ -2,8 +2,8 @@ import React from 'react';
 
 //Others
 import Users from './misc/users';
-import WebSocket from './misc/websocket';
-//import WebSocket from './misc/socketio';
+//import WebSocket from './misc/websocket';
+import WebSocket from './misc/socketio';
 
 //Components
 import Chat from './components/Chat';
@@ -36,7 +36,9 @@ class App extends React.Component<any, any> {
 
         this.login = this.login.bind(this);
         this.runWsCallback = this.runWsCallback.bind(this);
-        this.receiveWsCallback = this.receiveWsCallback.bind(this);
+        this.receiveTyping = this.receiveTyping.bind(this);
+        this.receiveChat = this.receiveChat.bind(this);
+        this.receiveUser = this.receiveUser.bind(this);
     }
 
     login(el: any) {
@@ -51,7 +53,9 @@ class App extends React.Component<any, any> {
 
     runWs() {
         this.state.ws.runCallback = this.runWsCallback;
-        this.state.ws.receiveCallback = this.receiveWsCallback;
+        this.state.ws.receiveChatCallback = this.receiveChat;
+        this.state.ws.receiveTypingCallback = this.receiveTyping;
+        this.state.ws.receiveUserCallback = this.receiveUser;
         this.state.ws.run();
     }
 
@@ -63,16 +67,9 @@ class App extends React.Component<any, any> {
     broadcastUserStatus() {
         clearTimeout(this.state.userBroadcastTimeoutId);
         setTimeout(() => {
-            this.state.ws.send({ dataType: "user", data: this.state.user });
+            this.state.ws.sendUser(this.state.user);
             this.broadcastUserStatus();
         }, 5000);
-    }
-
-    receiveWsCallback(json) {
-        const parsed = JSON.parse(json);
-        if (parsed.dataType == "message") this.receiveChat(parsed.data || parsed);
-        if (parsed.dataType == "typing") this.receiveTyping(parsed.data || parsed);
-        if (parsed.dataType == "user") this.receiveStatus(parsed.data || parsed);
     }
 
     receiveChat(data) {
@@ -95,7 +92,7 @@ class App extends React.Component<any, any> {
         }
     }
 
-    receiveStatus(data) {
+    receiveUser(data) {
         if (data.id != this.state.user.id) {
             const user = this.state.users.find(u => u.id === data.id);
 
