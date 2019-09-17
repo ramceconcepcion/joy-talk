@@ -21,6 +21,7 @@ export default {
 
     run() {
         this.WebSocketInstance = io.connect(this.getHost());
+        //this.WebSocketInstance = io.connect(this.getHost(), { transport: ['websocket'] });
 
         this.WebSocketInstance.on('connect', () => {
             console.log('Connected to server.');
@@ -42,10 +43,9 @@ export default {
 
         this.WebSocketInstance.on('disconnect', data => {
             console.log('Disconnected to server');
-
             this.connected = false;
             if (this.runCallback) this.runCallback(this.connected);
-            this.run();
+            //this.run();
         });
     },
 
