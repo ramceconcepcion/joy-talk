@@ -4,12 +4,30 @@ class Login extends React.Component<any, any>{
     constructor(props) {
         super(props);
 
+        this.state = {
+            users: props.users,
+            ignoreStr: props.ignoreStr,
+            error: false,
+        }
+
         this.submit = this.submit.bind(this);
     }
 
     submit(e) {
         e.preventDefault();
-        this.props.onSubmit(this.refs.input1);
+        const el: any = this.refs.input1;
+
+        let user = this.state.users.find(u => {
+            return atob(u.code.split(this.state.ignoreStr)[1]) == el.value;
+        });
+
+        if (user) {
+            user.status = true;
+            this.props.onSubmit(user);
+        }
+        else this.setState({ error: true });
+
+        el.value = "";
     }
 
     render() {
@@ -21,6 +39,7 @@ class Login extends React.Component<any, any>{
                     <label htmlFor="">Enter passcode:</label>
                     <input className="passcode" type="password" placeholder="" ref="input1" />
                     <input className="submitLogin" type="submit" value="Login" />
+                    {this.state.error ? <span className="error">No such passcode.</span> : null}
                 </form>
             </div>
         )

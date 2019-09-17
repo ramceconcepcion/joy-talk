@@ -26,6 +26,7 @@
     }
 
     .login-form {
+        position: relative;
         margin-top: 50px;
         width: 70%;
         min-width: $windowMinWidth;
@@ -48,6 +49,12 @@
             @include size(40px, 100%);
             outline: none;
             text-align: center;
+        }
+
+        .error {
+            position: absolute;
+            bottom: -40px;
+            color: #b61212;
         }
 
         .submitLogin {

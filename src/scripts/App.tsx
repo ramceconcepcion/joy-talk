@@ -41,13 +41,9 @@ class App extends React.Component<any, any> {
         this.receiveUser = this.receiveUser.bind(this);
     }
 
-    login(el: any) {
-        let user: any = this.state.users.find(u => atob(u.code.split(Users.ignoreStr)[1]) == el.value);
-        if (user) {
-            this.setState({ user });
-            this.runWs();
-            user.status = true;
-        }
+    login(user) {
+        this.runWs();
+        this.setState({ user });
         this.setState({ loginok: true });
     }
 
@@ -111,22 +107,21 @@ class App extends React.Component<any, any> {
     }
 
     public render() {
-        const checkLogin = () => {
-            return !this.state.user ?
-                <div className="passcodeError">You are not authorized to use this app.</div>
-                :
-                <Chat ws={this.state.ws}
-                    user={this.state.user}
-                    chats={this.state.chats}
-                    typing={this.state.typing} />
-        }
-
         return (
             <div className="container-wrapper">
                 <div className="app-window">
-                    {this.state.loginok ? null : <Login onSubmit={el => this.login(el)} />}
                     <Header user={this.state.user} users={this.state.users} connection={this.state.connection} />
-                    {checkLogin()}
+                    {
+                        this.state.loginok ?
+                            <Chat ws={this.state.ws}
+                                user={this.state.user}
+                                chats={this.state.chats}
+                                typing={this.state.typing} /> :
+
+                            <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={el => this.login(el)} />
+                    }
+
+
                 </div>
             </div>
         )
