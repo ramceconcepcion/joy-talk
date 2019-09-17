@@ -21,7 +21,7 @@ class ChatImagePreview extends React.Component<any, any>{
 
     render() {
         return (
-            <div className="chat-image-preview-wrapper" style={this.getStyle()}>
+            <div className="chat-image-preview-wrapper" style={this.getStyle()} onClick={(e) => this.props.closePreview(e)}>
                 <div className="chat-image-preview-close" onClick={(e) => this.props.closePreview(e)}>✕</div>
                 <div className="chat-image-preview">
                     <img src={this.getSrc()} alt="" />
