@@ -16,18 +16,21 @@ class Login extends React.Component<any, any>{
     submit(e) {
         e.preventDefault();
         const el: any = this.refs.input1;
+        const text = el.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
-        let user = this.state.users.find(u => {
-            return atob(u.code.split(this.state.ignoreStr)[1]) == el.value;
-        });
+        if (text != " " && text != "") {
+            let user = this.state.users.find(u => {
+                return atob(u.code.split(this.state.ignoreStr)[1]) == el.value;
+            });
 
-        if (user) {
-            user.status = true;
-            this.props.onSubmit(user);
+            if (user) {
+                user.status = true;
+                this.props.onSubmit(user);
+            }
+            else this.setState({ error: true });
+
+            el.value = "";
         }
-        else this.setState({ error: true });
-
-        el.value = "";
     }
 
     render() {
