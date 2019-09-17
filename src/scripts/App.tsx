@@ -3,7 +3,7 @@ import React from 'react';
 //Others
 import Users from './misc/users';
 //import WebSocket from './misc/websocket';
-import WebSocket from './misc/socketio';
+import WebSocket from './misc/sockets';
 
 //Components
 import Chat from './components/Chat';
