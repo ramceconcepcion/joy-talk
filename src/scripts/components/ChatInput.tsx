@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import sendicon from '../../icons/send.svg';
-import { throwStatement } from '@babel/types';
+import imageicon from '../../icons/image.svg';
+
+import { toBase64 } from '../misc/utils';
 
 class ChatInput extends React.Component<any, any>{
     typingTimeoutId: any;
@@ -18,6 +20,7 @@ class ChatInput extends React.Component<any, any>{
         this.sendChat = this.sendChat.bind(this);
         this.createChat = this.createChat.bind(this);
         this.typingChat = this.typingChat.bind(this);
+        this.uploadPhoto = this.uploadPhoto.bind(this);
     }
 
     getStyle(): any {
@@ -25,12 +28,13 @@ class ChatInput extends React.Component<any, any>{
         else return { opacity: 1, pointerEvents: "initial" };
     }
 
-    createChat(content) {
+    createChat(content, type?) {
         return {
             id: this.state.user.id,
             name: this.state.user.name,
             content: content,
             timestamp: new Date().getTime(),
+            type: type || "text"
         }
     }
 
@@ -65,15 +69,26 @@ class ChatInput extends React.Component<any, any>{
         }
     }
 
+    async uploadPhoto(e) {
+        const inputel: any = this.refs.addphoto;
+        const base64: any = await toBase64(inputel.files[0]);
+        const data = this.createChat(base64, "image");
+        this.state.ws.sendChat(data);
+    }
+
     render() {
         return (
             <form className="input" onSubmit={(e) => this.sendChat(e)} style={this.getStyle()}>
+                <label className="addphoto" htmlFor="#addphoto">
+                    <img src={imageicon} alt="addphoto" />
+                </label>
+                <input className="addphotobtn" id="#addphoto" type="file" ref="addphoto" onChange={e => this.uploadPhoto(e)} />
                 <textarea className="msgbox" ref="msg" placeholder="Type here..."
                     onKeyDown={e => this.allowNewLine(e)}
                     onInput={e => this.typingChat(e)} />
                 <input className="submitbtn" type="submit" />
-                <div className="sendimg" onClick={(e) => this.sendChat(e)}>
-                    <img src={sendicon} alt="" />
+                <div className="submiticon" onClick={(e) => this.sendChat(e)}>
+                    <img src={sendicon} alt="submit" />
                 </div>
             </form>
         )

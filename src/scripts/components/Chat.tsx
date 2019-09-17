@@ -6,6 +6,7 @@ import { arraysEqual } from '../misc/utils';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import TypingIndicator from './TypingIndicator';
+import ChatImagePreview from './ChatImagePreview';
 
 class Chat extends React.Component<any, any> {
     scrollToBottomTimeoutId: any = null;
@@ -18,9 +19,13 @@ class Chat extends React.Component<any, any> {
             user: props.user,
             chats: props.chats,
             typing: props.typing,
+
+            preview: null,
         };
 
         this.scrollToBottom = this.scrollToBottom.bind(this);
+        this.previewImage = this.previewImage.bind(this);
+        this.closePreview = this.closePreview.bind(this);
     }
 
     scrollToBottom() {
@@ -31,6 +36,15 @@ class Chat extends React.Component<any, any> {
 
         clearTimeout(this.scrollToBottomTimeoutId);
         this.scrollToBottomTimeoutId = setTimeout(func, 100);
+    }
+
+    previewImage(e) {
+        const src = e.target.getAttribute('data-content');
+        this.setState({ preview: src });
+    }
+
+    closePreview(e) {
+        this.setState({ preview: null })
     }
 
     render() {
@@ -44,7 +58,7 @@ class Chat extends React.Component<any, any> {
                     }
                     {
                         chats.map((chat, idx) =>
-                            <ChatMessage chat={chat} user={this.state.user.name} key={idx} />
+                            <ChatMessage chat={chat} user={this.state.user.name} key={idx} previewImage={this.previewImage} />
                         )
                     }
                     {!this.state.typing ? null :
@@ -52,6 +66,7 @@ class Chat extends React.Component<any, any> {
                     }
                 </ul>
                 <ChatInput ws={this.state.ws} user={this.state.user} />
+                <ChatImagePreview data={this.state.preview} closePreview={this.closePreview} />
             </div>
         );
     }

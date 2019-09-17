@@ -1,3 +1,6 @@
+@import './chatinput';
+@import './chatimagepreview';
+
 .chat-wrapper {
     @include size(calc(100% - #{$headerHeight}), 100%);
 
@@ -52,16 +55,9 @@
                 }
             }
 
-            img {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                position: absolute;
-                top: -10px;
-                left: 0px;
-            }
-
             .message {
+                @include flex-row-nowrap(center, center, center);
+                overflow: hidden;
                 margin: 0 !important;
 
                 &:hover~.date {
@@ -74,6 +70,11 @@
                     min-height: 16px;
                     word-wrap: break-word;
                     word-break: break-word;
+                }
+
+                img {
+                    max-height: 200px;
+                    cursor: pointer;
                 }
             }
 
@@ -99,55 +100,6 @@
                 bottom: 2px;
                 right: -35px;
                 text-align: right;
-            }
-        }
-    }
-
-    .input {
-        position: absolute;
-        bottom: 0;
-        padding: 5px;
-        @include size(auto, 100%);
-        min-height: 40px;
-        max-height: 80px;
-        background: $primary-regular;
-
-        @include flex-row-nowrap(flex-start, center, flex-start);
-        box-sizing: border-box;
-        white-space: pre-wrap;
-
-        .msgbox {
-            background: rgba(255, 255, 255, 0.8);
-            outline: 0;
-            border: none;
-            border-radius: 50px;
-            padding: 7px 40px 0px 10px;
-
-            @include size(30px, 100%);
-            min-height: 30px;
-            max-height: 60px;
-
-            box-sizing: border-box;
-            resize: none;
-            white-space: pre-wrap;
-
-            @extend %invisible-scroll-bar;
-        }
-
-        .submitbtn {
-            display: none;
-        }
-
-        .sendimg {
-            position: absolute;
-            right: 20px;
-            cursor: pointer;
-
-            @include size(30px, 20px);
-            @include flex-row-nowrap(center, center, center);
-
-            img {
-                @include size(20px, auto)
             }
         }
     }

@@ -9,6 +9,8 @@ class ChatMessage extends React.Component<any, any> {
             chat: props.chat,
             user: props.user
         }
+
+        this.getContent = this.getContent.bind(this);
     }
 
     getTime() {
@@ -26,13 +28,20 @@ class ChatMessage extends React.Component<any, any> {
         return `${h}:${m}${suffix}`;
     }
 
+    getContent() {
+        if (this.state.chat.type == "text") {
+            return this.state.chat.content.split('<br/>').map((c, i) => <span key={i}>{c}</span>)
+        }
+        else if (this.state.chat.type == "image") {
+            return <img src={this.state.chat.content} data-content={this.state.chat.content} alt={this.state.chat.name} onClick={e => this.props.previewImage(e)} />
+        }
+    }
+
     public render() {
         return (
             <li className={`chat ${this.state.user === this.state.chat.name ? "right" : "left"}`}>
                 <span className="username">{this.state.chat.name}</span>
-                <p className="message">{
-                    this.state.chat.content.split('<br/>').map((c, i) => <span key={i}>{c}</span>)
-                }</p>
+                <p className="message">{this.getContent()}</p>
                 <span className="date">{this.getTime()}</span>
             </li>
         )

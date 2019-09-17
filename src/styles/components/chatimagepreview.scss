@@ -1,0 +1,38 @@
+.chat-wrapper {
+    .chat-image-preview-wrapper {
+        position: absolute;
+        top: 0;
+        z-index: 10000;
+
+        padding: 40px 0 0 0;
+        @include size(100vh, 100vw);
+
+        background-color: rgba(0, 0, 0, 0.8);
+        @include flex-row-nowrap(center, flex-start, center);
+
+        overflow-y: auto;
+
+        .chat-image-preview-close {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-image-preview {
+            flex: 0 0 auto;
+
+            max-height: 90%;
+            max-width: 90%;
+
+            @include size(auto, auto);
+            @include flex-row-nowrap(center, flex-start, center);
+
+            img {
+                @include size(auto, 100%);
+            }
+        }
+    }
+}
