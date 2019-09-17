@@ -8,12 +8,14 @@ import { toBase64 } from '../misc/utils';
 
 class ChatInput extends React.Component<any, any>{
     typingTimeoutId: any;
+    ws: any = null;
 
     constructor(props) {
         super(props);
 
+        this.ws = props.ws;
+
         this.state = {
-            ws: props.ws,
             user: props.user
         }
 
@@ -24,7 +26,7 @@ class ChatInput extends React.Component<any, any>{
     }
 
     getStyle(): any {
-        if (!this.state.ws.connected) return { opacity: 0.6, pointerEvents: "none" };
+        if (!this.ws.connected) return { opacity: 0.6, pointerEvents: "none" };
         else return { opacity: 1, pointerEvents: "initial" };
     }
 
@@ -45,7 +47,7 @@ class ChatInput extends React.Component<any, any>{
 
         if (text !== " " && text !== "") {
             const data = this.createChat(text);
-            this.state.ws.sendChat(data);
+            this.ws.sendChat(data);
         }
 
         input.value = "";
@@ -59,7 +61,7 @@ class ChatInput extends React.Component<any, any>{
         data.content = '';
 
         clearTimeout(this.typingTimeoutId);
-        this.typingTimeoutId = setTimeout(() => { this.state.ws.sendTyping(data); }, 100);
+        this.typingTimeoutId = setTimeout(() => { this.ws.sendTyping(data); }, 100);
     }
 
     allowNewLine(e) {
@@ -73,7 +75,7 @@ class ChatInput extends React.Component<any, any>{
         const inputel: any = this.refs.addphoto;
         const base64: any = await toBase64(inputel.files[0]);
         const data = this.createChat(base64, "image");
-        this.state.ws.sendChat(data);
+        this.ws.sendChat(data);
     }
 
     render() {

@@ -60,7 +60,7 @@
             }
 
             .message {
-                @include flex-row-nowrap(center, center, center);
+                @include flex-col-nowrap(center, flex-start, center);
                 overflow: hidden;
                 margin: 0 !important;
 

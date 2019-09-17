@@ -11,13 +11,13 @@ import Header from './components/Header';
 import Login from './components/Login';
 
 class App extends React.Component<any, any> {
+    ws: any = WebSocket;
 
     constructor(props) {
         super(props);
 
         this.state = {
             //Web socket instance
-            ws: WebSocket,
 
             //users
             users: Users.entries,
@@ -48,11 +48,11 @@ class App extends React.Component<any, any> {
     }
 
     runWs() {
-        this.state.ws.runCallback = this.runWsCallback;
-        this.state.ws.receiveChatCallback = this.receiveChat;
-        this.state.ws.receiveTypingCallback = this.receiveTyping;
-        this.state.ws.receiveUserCallback = this.receiveUser;
-        this.state.ws.run();
+        this.ws.runCallback = this.runWsCallback;
+        this.ws.receiveChatCallback = this.receiveChat;
+        this.ws.receiveTypingCallback = this.receiveTyping;
+        this.ws.receiveUserCallback = this.receiveUser;
+        this.ws.run();
     }
 
     runWsCallback(connected) {
@@ -63,7 +63,7 @@ class App extends React.Component<any, any> {
     broadcastUserStatus() {
         clearTimeout(this.state.userBroadcastTimeoutId);
         setTimeout(() => {
-            this.state.ws.sendUser(this.state.user);
+            this.ws.sendUser(this.state.user);
             this.broadcastUserStatus();
         }, 5000);
     }
@@ -113,7 +113,7 @@ class App extends React.Component<any, any> {
                     <Header user={this.state.user} users={this.state.users} connection={this.state.connection} />
                     {
                         this.state.loginok ?
-                            <Chat ws={this.state.ws}
+                            <Chat ws={this.ws}
                                 user={this.state.user}
                                 chats={this.state.chats}
                                 typing={this.state.typing} /> :

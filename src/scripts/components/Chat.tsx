@@ -10,12 +10,14 @@ import ChatImagePreview from './ChatImagePreview';
 
 class Chat extends React.Component<any, any> {
     scrollToBottomTimeoutId: any = null;
+    ws: any = null;
 
     constructor(props) {
         super(props);
 
+        this.ws = props.ws;
+
         this.state = {
-            ws: props.ws,
             user: props.user,
             chats: props.chats,
             typing: props.typing,
@@ -65,7 +67,7 @@ class Chat extends React.Component<any, any> {
                         <TypingIndicator user={this.state.typing} />
                     }
                 </ul>
-                <ChatInput ws={this.state.ws} user={this.state.user} />
+                <ChatInput ws={this.ws} user={this.state.user} />
                 <ChatImagePreview data={this.state.preview} closePreview={this.closePreview} />
             </div>
         );
