@@ -16,7 +16,7 @@ export default {
     receiveUserCallback: null,
 
     getHost() {
-        return this.mode == 'dev' ? this.HOST_dev : this.HOST_prod;
+        return this.mode === 'dev' ? this.HOST_dev : this.HOST_prod;
     },
 
     run() {

@@ -69,11 +69,11 @@ class Header extends React.Component<any, any>{
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.connection != this.props.connection) {
+        if (prevProps.connection !== this.props.connection) {
             this.setState({ connection: this.props.connection });
         }
 
-        if (prevProps.user != this.props.user) {
+        if (prevProps.user !== this.props.user) {
             this.setState({ user: this.props.user });
         }
 
@@ -82,27 +82,6 @@ class Header extends React.Component<any, any>{
         }
     }
 }
-
-class HeaderMenu extends React.Component<any, any>{
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            show: props.show
-        }
-    }
-
-    render() {
-        return (
-            <div className="header-menu">
-                <div className="item">Themes</div>
-                <div className="item">Name</div>
-                <div className="item">Passcode</div>
-            </div>
-        )
-    }
-}
-
 
 
 export default Header

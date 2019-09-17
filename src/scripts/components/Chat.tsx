@@ -81,7 +81,7 @@ class Chat extends React.Component<any, any> {
         if (!arraysEqual(prevProps.chats, this.props.chats)) {
             this.setState({ chats: this.props.chats });
         }
-        if (prevProps.typing != this.props.typing) {
+        if (prevProps.typing !== this.props.typing) {
             this.setState({ typing: this.props.typing });
         }
     }

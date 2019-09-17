@@ -9,10 +9,6 @@ class ThemePicker extends React.Component<any, any>{
         }
     }
 
-    getClass() {
-        return "item" + "";
-    }
-
     setStyle() {
         return { display: this.state.show ? "flex" : "none" }
     }
@@ -32,7 +28,7 @@ class ThemePicker extends React.Component<any, any>{
             <div className="theme-menu" style={this.setStyle()}>
                 {
                     colors.map((c, idx) => {
-                        return <div key={idx} className={this.getClass()} data-value={c} onClick={e => this.applyTheme(e.target)}></div>
+                        return <div key={idx} className="item" data-value={c} onClick={e => this.applyTheme(e.target)}></div>
                     })
                 }
             </div>
@@ -40,7 +36,7 @@ class ThemePicker extends React.Component<any, any>{
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.show != this.props.show) {
+        if (prevProps.show !== this.props.show) {
             this.setState({ show: this.props.show });
         }
     }

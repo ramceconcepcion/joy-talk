@@ -18,9 +18,9 @@ class Login extends React.Component<any, any>{
         const el: any = this.refs.input1;
         const text = el.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
-        if (text != " " && text != "") {
+        if (text !== " " && text !== "") {
             let user = this.state.users.find(u => {
-                return atob(u.code.split(this.state.ignoreStr)[1]) == el.value;
+                return atob(u.code.split(this.state.ignoreStr)[1]) === el.value;
             });
 
             if (user) {

@@ -72,14 +72,14 @@ class App extends React.Component<any, any> {
         this.state.chats.push(data);
         this.setState({ chats: this.state.chats });
 
-        if (data.id != this.state.user.id) {
+        if (data.id !== this.state.user.id) {
             document.title = data.name + " sent a new message!";
             this.setState({ typing: null });
         }
     }
 
     receiveTyping(data) {
-        if (data.id != this.state.user.id) {
+        if (data.id !== this.state.user.id) {
             this.setState({ typing: { name: data.name } });
 
             clearTimeout(this.state.typingTimeoutId);
@@ -89,7 +89,7 @@ class App extends React.Component<any, any> {
     }
 
     receiveUser(data) {
-        if (data.id != this.state.user.id) {
+        if (data.id !== this.state.user.id) {
             const user = this.state.users.find(u => u.id === data.id);
 
             if (!user.status) {

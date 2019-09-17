@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class ChatMessage extends React.Component<any, any> {
     constructor(props) {
@@ -29,10 +28,10 @@ class ChatMessage extends React.Component<any, any> {
     }
 
     getContent() {
-        if (this.state.chat.type == "text") {
+        if (this.state.chat.type === "text") {
             return this.state.chat.content.split('<br/>').map((c, i) => <span key={i}>{c}</span>)
         }
-        else if (this.state.chat.type == "image") {
+        else if (this.state.chat.type === "image") {
             return <img src={this.state.chat.content} data-content={this.state.chat.content} alt={this.state.chat.name} onClick={e => this.props.previewImage(e)} />
         }
     }

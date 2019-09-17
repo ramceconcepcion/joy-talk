@@ -35,7 +35,7 @@ class Members extends React.Component<any, any>{
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.show != this.props.show) {
+        if (prevProps.show !== this.props.show) {
             this.setState({ show: this.props.show });
         }
         if (!arraysEqual(prevProps.users, this.props.users)) {

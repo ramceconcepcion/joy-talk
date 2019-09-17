@@ -43,7 +43,7 @@ class ChatInput extends React.Component<any, any>{
         const input: any = ReactDOM.findDOMNode(this.refs.msg);
         const text = input.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
-        if (text != " " && text != "") {
+        if (text !== " " && text !== "") {
             const data = this.createChat(text);
             this.state.ws.sendChat(data);
         }
@@ -63,7 +63,7 @@ class ChatInput extends React.Component<any, any>{
     }
 
     allowNewLine(e) {
-        if (e.keyCode == 13 && !e.shiftKey) {
+        if (e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
             this.sendChat(e);
         }
