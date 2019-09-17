@@ -9,3 +9,27 @@
         opacity: 1;
     }
 }
+
+@keyframes popoutfromleft {
+    from {
+        left: 40px;
+        opacity: 0;
+    }
+
+    to {
+        left: 0px;
+        opacity: 1;
+    }
+}
+
+@keyframes popoutfromright {
+    from {
+        right: 40px;
+        opacity: 0;
+    }
+
+    to {
+        right: 0px;
+        opacity: 1;
+    }
+}

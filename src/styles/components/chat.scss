@@ -38,9 +38,13 @@
             word-wrap: break-word;
             white-space: pre-line;
 
+            animation: popoutfromright 150ms ease-in-out;
+
             &.right {
                 margin-left: auto;
                 background: $primary-regular;
+
+                animation: popoutfromleft 150ms ease-in-out;
 
                 .username {
                     right: 0px;
