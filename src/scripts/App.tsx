@@ -17,8 +17,6 @@ class App extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            //Web socket instance
-
             //users
             users: Users.entries,
             user: null,
