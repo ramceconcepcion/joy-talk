@@ -24,6 +24,7 @@ class App extends React.Component<any, any> {
 
             //chats
             chats: [],
+            chatNotifTimeoutId: null,
             typing: null,
             typingTimeoutId: null,
 
@@ -37,6 +38,7 @@ class App extends React.Component<any, any> {
         this.receiveTyping = this.receiveTyping.bind(this);
         this.receiveChat = this.receiveChat.bind(this);
         this.receiveUser = this.receiveUser.bind(this);
+        this.blinkChatNotif = this.blinkChatNotif.bind(this);
     }
 
     login(user) {
@@ -60,10 +62,30 @@ class App extends React.Component<any, any> {
 
     broadcastUserStatus() {
         clearTimeout(this.state.userBroadcastTimeoutId);
-        setTimeout(() => {
+        const func = setTimeout(() => {
             this.ws.sendUser(this.state.user);
             this.broadcastUserStatus();
         }, 5000);
+        this.setState({ userBroadcastTimeoutId: func });
+    }
+
+    blinkChatNotif(run, name) {
+        if (run) {
+            clearTimeout(this.state.chatNotifTimeoutId);
+
+            const func = setTimeout(() => {
+                document.title = name + " sent a new message!";
+                this.blinkChatNotif(true, name);
+
+                setTimeout(() => document.title = "Joy Talk", 1000);
+            }, 1500);
+
+            this.setState({ chatNotifTimeoutId: func });
+        }
+        else {
+            clearTimeout(this.state.chatNotifTimeoutId);
+            document.title = "Joy Talk";
+        }
     }
 
     receiveChat(data) {
@@ -71,7 +93,7 @@ class App extends React.Component<any, any> {
         this.setState({ chats: this.state.chats });
 
         if (data.id !== this.state.user.id) {
-            document.title = data.name + " sent a new message!";
+            this.blinkChatNotif(true, data.name);
             this.setState({ typing: null });
         }
     }
@@ -114,7 +136,8 @@ class App extends React.Component<any, any> {
                             <Chat ws={this.ws}
                                 user={this.state.user}
                                 chats={this.state.chats}
-                                typing={this.state.typing} /> :
+                                typing={this.state.typing}
+                                blinkChatNotif={this.blinkChatNotif} /> :
 
                             <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={el => this.login(el)} />
                     }

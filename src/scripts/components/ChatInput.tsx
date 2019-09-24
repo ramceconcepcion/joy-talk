@@ -51,7 +51,7 @@ class ChatInput extends React.Component<any, any>{
         }
 
         input.value = "";
-        document.title = "Joy Talk";
+        this.props.blinkChatNotif();
     }
 
     typingChat(e) {
