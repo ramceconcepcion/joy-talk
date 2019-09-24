@@ -1,4 +1,4 @@
-const entries = [
+export const entries = [
     {
         id: 1,
         name: "Cucumber",
@@ -19,9 +19,4 @@ const entries = [
     },
 ];
 
-const ignoreStr = "cGFzc3dvcmRmb29iYXJhZGRtZQ==";
-
-export default {
-    entries,
-    ignoreStr
-}
+export const str = "cGFzc3dvcmRmb29iYXJhZGRtZQ==";

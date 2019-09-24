@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { applyStore } from '../store/map';
+
 import menuicon from '../../icons/menu.svg';
 
 import { arraysEqual } from '../misc/utils';
@@ -11,8 +14,6 @@ class Header extends React.Component<any, any>{
         super(props);
 
         this.state = {
-            users: props.users,
-            user: props.user,
             connection: props.connection,
             showThemeMenu: false,
             showMembers: false,
@@ -23,7 +24,7 @@ class Header extends React.Component<any, any>{
     }
 
     isAuthorized() {
-        return !this.state.user ? false : true
+        return !this.props.user ? false : true
     }
 
     getConnection() {
@@ -47,23 +48,16 @@ class Header extends React.Component<any, any>{
     render() {
         return (
             <div className="app-header">
-                {
-                    !this.isAuthorized() ? null :
-                        <div className={this.getConnection()}
-                            onClick={(e) => this.toggleMembers()}
-                            title={this.getConnectionTitle()}></div>
-                }
+                <div className={this.getConnection()}
+                    onClick={(e) => this.toggleMembers()}
+                    title={this.getConnectionTitle()}></div>
                 <div className="app-title">JoyTalk</div>
-                {
-                    !this.isAuthorized() ? null :
-                        <div className="menu" onClick={(e) => this.toggleThemeMenu()}>
-                            <img src={menuicon} alt="" />
-                        </div>
-                }
-
+                <div className="menu" onClick={(e) => this.toggleThemeMenu()}>
+                    <img src={menuicon} alt="" />
+                </div>
                 {/* <HeaderMenu show={false} /> */}
                 {<ThemePicker show={this.state.showThemeMenu} close={this.toggleThemeMenu} />}
-                {<Members show={this.state.showMembers} users={this.state.users} />}
+                {<Members show={this.state.showMembers} />}
             </div>
         )
     }
@@ -73,15 +67,15 @@ class Header extends React.Component<any, any>{
             this.setState({ connection: this.props.connection });
         }
 
-        if (prevProps.user !== this.props.user) {
-            this.setState({ user: this.props.user });
-        }
+        // if (prevProps.user !== this.props.user) {
+        //     this.setState({ user: this.props.user });
+        // }
 
-        if (!arraysEqual(prevProps.users, this.props.users)) {
-            this.setState({ users: this.props.users });
-        }
+        // if (!arraysEqual(prevProps.users, this.props.users)) {
+        //     this.setState({ users: this.props.users });
+        // }
     }
 }
 
 
-export default Header
+export default applyStore(Header)

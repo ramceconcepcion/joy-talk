@@ -1,11 +1,11 @@
 import React from 'react';
+import { applyStore } from '../store/map';
 
 class Login extends React.Component<any, any>{
     constructor(props) {
         super(props);
 
         this.state = {
-            users: props.users,
             ignoreStr: props.ignoreStr,
             error: false,
         }
@@ -19,7 +19,7 @@ class Login extends React.Component<any, any>{
         const text = el.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
         if (text !== " " && text !== "") {
-            let user = this.state.users.find(u => {
+            let user = this.props.users.find(u => {
                 return atob(u.code.split(this.state.ignoreStr)[1]) === el.value;
             });
 
@@ -55,4 +55,4 @@ class Login extends React.Component<any, any>{
 }
 
 
-export default Login;
+export default applyStore(Login);

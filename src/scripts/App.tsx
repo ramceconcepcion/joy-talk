@@ -1,16 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { applyStore } from './store/map';
 
-//Others
-import Users from './misc/users';
-//import WebSocket from './misc/websocket';
-import WebSocket from './misc/sockets';
+//3rd parties
+import Push from 'push.js';
 
 //Components
 import Chat from './components/Chat';
 import Header from './components/Header';
 import Login from './components/Login';
 
-import Push from 'push.js';
+//Misc
+import { entries, str as ignoreStr } from './misc/usrs';
+import WebSocket from './misc/sockets';
 
 class App extends React.Component<any, any> {
     ws: any = WebSocket;
@@ -20,14 +22,10 @@ class App extends React.Component<any, any> {
 
         this.state = {
             //users
-            users: Users.entries,
-            user: null,
             userBroadcastTimeoutId: null,
 
             //chats
-            chats: [],
             chatNotifTimeoutId: null,
-            typing: null,
             typingTimeoutId: null,
 
             //local state
@@ -41,12 +39,14 @@ class App extends React.Component<any, any> {
         this.receiveChat = this.receiveChat.bind(this);
         this.receiveUser = this.receiveUser.bind(this);
         this.blinkChatNotif = this.blinkChatNotif.bind(this);
+
+        this.props.SET_USERS(entries);
     }
 
     login(user) {
         this.runWs();
-        this.setState({ user });
         this.setState({ loginok: true });
+        this.props.SET_CURRENT_USER(user);
     }
 
     runWs() {
@@ -65,7 +65,7 @@ class App extends React.Component<any, any> {
     broadcastUserStatus() {
         clearTimeout(this.state.userBroadcastTimeoutId);
         const func = setTimeout(() => {
-            this.ws.sendUser(this.state.user);
+            this.ws.sendUser(this.props.user);
             this.broadcastUserStatus();
         }, 5000);
         this.setState({ userBroadcastTimeoutId: func });
@@ -111,7 +111,7 @@ class App extends React.Component<any, any> {
         this.state.chats.push(data);
         this.setState({ chats: this.state.chats });
 
-        if (data.id !== this.state.user.id) {
+        if (data.id !== this.props.user.id) {
             this.sendPushNotification(data);
             this.blinkChatNotif(true, data.name);
             this.setState({ typing: null });
@@ -119,7 +119,7 @@ class App extends React.Component<any, any> {
     }
 
     receiveTyping(data) {
-        if (data.id !== this.state.user.id) {
+        if (data.id !== this.props.user.id) {
             this.setState({ typing: { name: data.name } });
 
             clearTimeout(this.state.typingTimeoutId);
@@ -129,18 +129,18 @@ class App extends React.Component<any, any> {
     }
 
     receiveUser(data) {
-        if (data.id !== this.state.user.id) {
-            const user = this.state.users.find(u => u.id === data.id);
+        if (data.id !== this.props.user.id) {
+            const user = this.props.users.find(u => u.id === data.id);
 
             if (!user.status) {
                 user.status = true;
-                this.setState({ users: this.state.users });
+                this.setState({ users: this.props.users });
             }
 
             clearTimeout(user.connectionTimeoutId);
             user.connectionTimeoutId = setTimeout(() => {
                 user.status = false;
-                this.setState({ users: this.state.users });
+                this.setState({ users: this.props.users });
             }, 6000);
         }
     }
@@ -149,16 +149,16 @@ class App extends React.Component<any, any> {
         return (
             <div className="container-wrapper">
                 <div className="app-window">
-                    <Header user={this.state.user} users={this.state.users} connection={this.state.connection} />
+                    <Header connection={this.state.connection} />
                     {
                         this.state.loginok ?
                             <Chat ws={this.ws}
-                                user={this.state.user}
-                                chats={this.state.chats}
-                                typing={this.state.typing}
+                                user={this.props.user}
+                                chats={this.props.chats}
+                                typing={this.props.typing}
                                 blinkChatNotif={this.blinkChatNotif} /> :
 
-                            <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={el => this.login(el)} />
+                            <Login ignoreStr={ignoreStr} onSubmit={el => this.login(el)} />
                     }
 
 
@@ -174,4 +174,4 @@ class App extends React.Component<any, any> {
     }
 }
 
-export default App;
+export default applyStore(App);

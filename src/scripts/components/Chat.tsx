@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { arraysEqual } from '../misc/utils';
 
+import { applyStore } from '../store/map';
+
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import TypingIndicator from './TypingIndicator';
@@ -18,10 +20,6 @@ class Chat extends React.Component<any, any> {
         this.ws = props.ws;
 
         this.state = {
-            user: props.user,
-            chats: props.chats,
-            typing: props.typing,
-
             preview: null,
         };
 
@@ -50,24 +48,22 @@ class Chat extends React.Component<any, any> {
     }
 
     render() {
-        const { chats }: any = this.state;
-
         return (
             <div className="chat-wrapper">
                 <ul className="chats" ref="chats">
                     {
-                        <div className="welcome">{'Welcome to JoyTalk, ' + this.state.user.name}</div>
+                        <div className="welcome">{'Welcome to JoyTalk, ' + this.props.user.name}</div>
                     }
                     {
-                        chats.map((chat, idx) =>
-                            <ChatMessage chat={chat} user={this.state.user.name} key={idx} previewImage={this.previewImage} />
+                        this.props.chats.map((chat, idx) =>
+                            <ChatMessage chat={chat} key={idx} previewImage={this.previewImage} />
                         )
                     }
                     {!this.state.typing ? null :
-                        <TypingIndicator user={this.state.typing} />
+                        <TypingIndicator />
                     }
                 </ul>
-                <ChatInput blinkChatNotif={this.props.blinkChatNotif} ws={this.ws} user={this.state.user} />
+                <ChatInput blinkChatNotif={this.props.blinkChatNotif} ws={this.ws} />
                 <ChatImagePreview data={this.state.preview} closePreview={this.closePreview} />
             </div>
         );
@@ -79,15 +75,8 @@ class Chat extends React.Component<any, any> {
 
     componentDidUpdate(prevProps) {
         this.scrollToBottom();
-
-        if (!arraysEqual(prevProps.chats, this.props.chats)) {
-            this.setState({ chats: this.props.chats });
-        }
-        if (prevProps.typing !== this.props.typing) {
-            this.setState({ typing: this.props.typing });
-        }
     }
 }
 
 
-export default Chat;
+export default applyStore(Chat);
