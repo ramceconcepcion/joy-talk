@@ -101,6 +101,7 @@ class App extends React.Component<any, any> {
         else {
             Push.create(data.name + ' sent a new message!', {
                 body: 'Photo',
+                icon: data.content,
                 timeout: 3000
             });
         }
