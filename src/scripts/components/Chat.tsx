@@ -67,7 +67,7 @@ class Chat extends React.Component<any, any> {
                         <TypingIndicator user={this.state.typing} />
                     }
                 </ul>
-                <ChatInput ws={this.ws} user={this.state.user} />
+                <ChatInput blinkChatNotif={this.props.blinkChatNotif} ws={this.ws} user={this.state.user} />
                 <ChatImagePreview data={this.state.preview} closePreview={this.closePreview} />
             </div>
         );
