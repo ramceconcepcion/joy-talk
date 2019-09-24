@@ -10,6 +10,8 @@ import Chat from './components/Chat';
 import Header from './components/Header';
 import Login from './components/Login';
 
+import Push from 'push.js';
+
 class App extends React.Component<any, any> {
     ws: any = WebSocket;
 
@@ -90,11 +92,28 @@ class App extends React.Component<any, any> {
         }
     }
 
+    sendPushNotification(data) {
+
+        if (data.type == 'text') {
+            Push.create(data.name + ' sent a new message!', {
+                body: data.content,
+                timeout: 3000
+            });
+        }
+        else {
+            Push.create(data.name + ' sent a new message!', {
+                body: 'Photo',
+                timeout: 3000
+            });
+        }
+    }
+
     receiveChat(data) {
         this.state.chats.push(data);
         this.setState({ chats: this.state.chats });
 
         if (data.id !== this.state.user.id) {
+            this.sendPushNotification(data);
             this.blinkChatNotif(true, data.name);
             this.setState({ typing: null });
         }
@@ -124,7 +143,6 @@ class App extends React.Component<any, any> {
                 user.status = false;
                 this.setState({ users: this.state.users });
             }, 6000);
-
         }
     }
 
@@ -153,6 +171,7 @@ class App extends React.Component<any, any> {
     componentDidMount() {
         //Apply theme from localStorage
         document.body.className = localStorage['joytalk_theme'] || 'deeporange';
+
     }
 }
 
