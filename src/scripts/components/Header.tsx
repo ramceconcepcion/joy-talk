@@ -1,10 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { applyStore } from '../store/map';
+import { applyStore } from '../store/store';
 
 import menuicon from '../../icons/menu.svg';
-
-import { arraysEqual } from '../misc/utils';
 
 import ThemePicker from './ThemePicker';
 import Members from './Members';

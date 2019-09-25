@@ -6,18 +6,13 @@ import imageicon from '../../icons/image.svg';
 
 import { toBase64 } from '../misc/utils';
 
+import { applyStore } from '../store/store';
+
 class ChatInput extends React.Component<any, any>{
     typingTimeoutId: any;
-    ws: any = null;
 
     constructor(props) {
         super(props);
-
-        this.ws = props.ws;
-
-        this.state = {
-            user: props.user
-        }
 
         this.sendChat = this.sendChat.bind(this);
         this.createChat = this.createChat.bind(this);
@@ -26,14 +21,14 @@ class ChatInput extends React.Component<any, any>{
     }
 
     getStyle(): any {
-        if (!this.ws.connected) return { opacity: 0.6, pointerEvents: "none" };
+        if (!this.props.ws.connected) return { opacity: 0.6, pointerEvents: "none" };
         else return { opacity: 1, pointerEvents: "initial" };
     }
 
     createChat(content, type?) {
         return {
-            id: this.state.user.id,
-            name: this.state.user.name,
+            id: this.props.user.id,
+            name: this.props.user.name,
             content: content,
             timestamp: new Date().getTime(),
             type: type || "text"
@@ -47,7 +42,7 @@ class ChatInput extends React.Component<any, any>{
 
         if (text !== " " && text !== "") {
             const data = this.createChat(text);
-            this.ws.sendChat(data);
+            this.props.ws.sendChat(data);
         }
 
         input.value = "";
@@ -61,7 +56,7 @@ class ChatInput extends React.Component<any, any>{
         data.content = '';
 
         clearTimeout(this.typingTimeoutId);
-        this.typingTimeoutId = setTimeout(() => { this.ws.sendTyping(data); }, 100);
+        this.typingTimeoutId = setTimeout(() => { this.props.ws.sendTyping(data); }, 100);
     }
 
     allowNewLine(e) {
@@ -75,7 +70,7 @@ class ChatInput extends React.Component<any, any>{
         const inputel: any = this.refs.addphoto;
         const base64: any = await toBase64(inputel.files[0]);
         const data = this.createChat(base64, "image");
-        this.ws.sendChat(data);
+        this.props.ws.sendChat(data);
     }
 
     render() {
@@ -96,7 +91,8 @@ class ChatInput extends React.Component<any, any>{
         )
     }
 
-
+    componentDidUpdate() {
+    }
 }
 
-export default ChatInput;
+export default applyStore(ChatInput);

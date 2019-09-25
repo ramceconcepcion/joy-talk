@@ -1,5 +1,5 @@
 import React from 'react';
-import { applyStore } from '../store/map';
+import { applyStore } from '../store/store';
 
 class Login extends React.Component<any, any>{
     constructor(props) {

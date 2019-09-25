@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { applyStore } from '../store/map';
+import { applyStore } from '../store/store';
 
 class Members extends React.Component<any, any>{
     constructor(props) {

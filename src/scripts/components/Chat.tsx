@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { arraysEqual } from '../misc/utils';
-
-import { applyStore } from '../store/map';
+import { applyStore } from '../store/store';
 
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
@@ -16,8 +14,6 @@ class Chat extends React.Component<any, any> {
 
     constructor(props) {
         super(props);
-
-        this.ws = props.ws;
 
         this.state = {
             preview: null,
@@ -59,11 +55,11 @@ class Chat extends React.Component<any, any> {
                             <ChatMessage chat={chat} key={idx} previewImage={this.previewImage} />
                         )
                     }
-                    {!this.state.typing ? null :
+                    {!this.props.typing ? null :
                         <TypingIndicator />
                     }
                 </ul>
-                <ChatInput blinkChatNotif={this.props.blinkChatNotif} ws={this.ws} />
+                <ChatInput blinkChatNotif={this.props.blinkChatNotif} />
                 <ChatImagePreview data={this.state.preview} closePreview={this.closePreview} />
             </div>
         );
