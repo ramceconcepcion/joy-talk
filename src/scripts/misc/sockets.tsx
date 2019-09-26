@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 export default {
-    HOST_prod: 'wss://joytalk-server.herokuapp.com',
+    HOST_prod: 'wss://joytalk-ws-server.herokuapp.com',
     HOST_dev: 'ws://localhost:5000',
     mode: 'prod',
 
