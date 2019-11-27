@@ -15,6 +15,8 @@ export default {
     receiveTypingCallback: null,
     receiveUserCallback: null,
 
+    room: "default_room",
+
     getHost() {
         return this.mode === 'dev' ? this.HOST_dev : this.HOST_prod;
     },
@@ -50,14 +52,17 @@ export default {
     },
 
     sendChat(data) {
+        data.room = this.room;
         this.WebSocketInstance.emit('message', data);
     },
 
     sendTyping(data) {
+        data.room = this.room;
         this.WebSocketInstance.emit('typing', data);
     },
 
     sendUser(data) {
+        data.room = this.room;
         this.WebSocketInstance.emit('user', data);
     },
 }

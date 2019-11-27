@@ -14,6 +14,7 @@ import Push from 'push.js';
 
 class App extends React.Component<any, any> {
     ws: any = WebSocket;
+    room: string = "";
 
     constructor(props) {
         super(props);
@@ -45,13 +46,15 @@ class App extends React.Component<any, any> {
         this.blinkChatNotif = this.blinkChatNotif.bind(this);
     }
 
-    login(user) {
+    login(user, room) {
+        this.room = room;
         this.runWs();
         this.setState({ user });
         this.setState({ loginok: true });
     }
 
     runWs() {
+        this.ws.room = this.room;
         this.ws.runCallback = this.runWsCallback;
         this.ws.receiveChatCallback = this.receiveChat;
         this.ws.receiveTypingCallback = this.receiveTyping;
@@ -155,12 +158,13 @@ class App extends React.Component<any, any> {
                     {
                         this.state.loginok ?
                             <Chat ws={this.ws}
+                                room={this.room}
                                 user={this.state.user}
                                 chats={this.state.chats}
                                 typing={this.state.typing}
                                 blinkChatNotif={this.blinkChatNotif} /> :
 
-                            <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={el => this.login(el)} />
+                            <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={(user, room) => this.login(user, room)} />
                     }
 
 

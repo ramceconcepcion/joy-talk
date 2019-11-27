@@ -16,16 +16,18 @@ class Login extends React.Component<any, any>{
     submit(e) {
         e.preventDefault();
         const el: any = this.refs.input1;
+        const el2: any = this.refs.input2;
         const text = el.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
+        const text2 = el2.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
-        if (text !== " " && text !== "") {
+        if (text !== " " && text !== "" && text2 !== " " && text2 !== "") {
             let user = this.state.users.find(u => {
                 return atob(u.code.split(this.state.ignoreStr)[1]) === el.value;
             });
 
             if (user) {
                 user.status = true;
-                this.props.onSubmit(user);
+                this.props.onSubmit(user, el2.value);
             }
             else this.setState({ error: true });
 
@@ -41,6 +43,9 @@ class Login extends React.Component<any, any>{
                 <form className="login-form" onSubmit={(evt) => this.submit(evt)}>
                     <label htmlFor="">Enter passcode:</label>
                     <input className="passcode" type="password" placeholder="" ref="input1" />
+                    <br />
+                    <label htmlFor="">Enter room code:</label>
+                    <input className="passcode room" type="password" placeholder="" ref="input2" />
                     <input className="submitLogin" type="submit" value="Login" />
                     {this.state.error ? <span className="error">No such passcode.</span> : null}
                 </form>
