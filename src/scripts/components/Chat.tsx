@@ -18,6 +18,8 @@ class Chat extends React.Component<any, any> {
         this.ws = props.ws;
 
         this.state = {
+            room: props.room,
+
             user: props.user,
             chats: props.chats,
             typing: props.typing,
@@ -56,7 +58,7 @@ class Chat extends React.Component<any, any> {
             <div className="chat-wrapper">
                 <ul className="chats" ref="chats">
                     {
-                        <div className="welcome">{'Welcome to JoyTalk, ' + this.state.user.name}</div>
+                        <div className="welcome">{'Welcome to JoyTalk, ' + this.state.user.name + ". You are at room: " + this.state.room}</div>
                     }
                     {
                         chats.map((chat, idx) =>
