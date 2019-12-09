@@ -1,12 +1,11 @@
 import React from 'react';
+import uuidv4 from 'uuid/v4';
 
 class Login extends React.Component<any, any>{
     constructor(props) {
         super(props);
 
         this.state = {
-            users: props.users,
-            ignoreStr: props.ignoreStr,
             error: false,
         }
 
@@ -15,24 +14,24 @@ class Login extends React.Component<any, any>{
 
     submit(e) {
         e.preventDefault();
-        const el: any = this.refs.input1;
-        const el2: any = this.refs.input2;
-        const text = el.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
-        const text2 = el2.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
+        const userNameEl: any = this.refs.input1;
+        const roomCodeEl: any = this.refs.input2;
+        const userName = userNameEl.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
+        const roomCode = roomCodeEl.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
-        if (text !== " " && text !== "" && text2 !== " " && text2 !== "") {
-            let user = this.state.users.find(u => {
-                return atob(u.code.split(this.state.ignoreStr)[1]) === el.value;
-            });
-
-            if (user) {
-                user.status = true;
-                this.props.onSubmit(user, el2.value);
+        if (userName !== " " && userName !== "" && roomCode !== " " && roomCode !== "") {
+            let user = {
+                id: uuidv4(),
+                name: userName,
+                status: true,
+                connectionTimeoutId: null,
             }
-            else this.setState({ error: true });
 
-            el.value = "";
+            this.props.onSubmit(user, roomCodeEl.value);
+            userNameEl.value = "";
+            roomCodeEl.value = "";
         }
+        else this.setState({ error: true });
     }
 
     render() {
@@ -41,13 +40,13 @@ class Login extends React.Component<any, any>{
                 <div className="login-title">JoyTalk</div>
                 <div className="login-subtitle">Your quick chat solution against workplace IT.</div>
                 <form className="login-form" onSubmit={(evt) => this.submit(evt)}>
-                    <label htmlFor="">Enter passcode:</label>
-                    <input className="passcode" type="password" placeholder="" ref="input1" />
-                    <br />
-                    <label htmlFor="">Enter room code:</label>
-                    <input className="passcode room" type="password" placeholder="" ref="input2" />
+                    <label htmlFor="">Enter your name:</label>
+                    <input className="login-txt" type="text" placeholder="" ref="input1" />
+                    <div className="separator"></div>
+                    <label className="room" htmlFor="">Enter room code:</label>
+                    <input className="login-txt room" type="password" placeholder="" ref="input2" />
                     <input className="submitLogin" type="submit" value="Login" />
-                    {this.state.error ? <span className="error">No such passcode.</span> : null}
+                    {this.state.error ? <span className="error">Please fill all fields.</span> : null}
                 </form>
             </div>
         )

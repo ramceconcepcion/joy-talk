@@ -38,9 +38,13 @@
             color: $primary-regular;
             width: 100%;
             font-size: 12px;
+
+            &.room {
+                margin-top: 10px;
+            }
         }
 
-        .passcode {
+        .login-txt {
             color: $primary-regular;
             border: none;
             border-bottom: 1px solid #ccc;

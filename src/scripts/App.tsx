@@ -1,7 +1,5 @@
 import React from 'react';
 
-//Others
-import Users from './misc/users';
 //import WebSocket from './misc/websocket';
 import WebSocket from './misc/sockets';
 
@@ -22,8 +20,8 @@ class App extends React.Component<any, any> {
         this.state = {
             //Web socket instance
 
-            //users
-            users: Users.entries,
+            //user
+            users: [],
             user: null,
             userBroadcastTimeoutId: null,
 
@@ -51,6 +49,8 @@ class App extends React.Component<any, any> {
         this.runWs();
         this.setState({ user });
         this.setState({ loginok: true });
+
+        this.addUser(user);
     }
 
     runWs() {
@@ -96,7 +96,6 @@ class App extends React.Component<any, any> {
     }
 
     sendPushNotification(data) {
-
         if (data.type == 'text') {
             Push.create(data.name + ' sent a new message!', {
                 body: data.content,
@@ -136,18 +135,31 @@ class App extends React.Component<any, any> {
     receiveUser(data) {
         if (data.id !== this.state.user.id) {
             const user = this.state.users.find(u => u.id === data.id);
+            if (user) {
+                if (!user.status) {
+                    user.status = true;
+                    this.setState({ users: this.state.users });
+                }
 
-            if (!user.status) {
-                user.status = true;
-                this.setState({ users: this.state.users });
+                clearTimeout(user.connectionTimeoutId);
+                user.connectionTimeoutId = setTimeout(() => {
+                    user.status = false;
+                    this.setState({ users: this.state.users });
+                }, 6000);
             }
-
-            clearTimeout(user.connectionTimeoutId);
-            user.connectionTimeoutId = setTimeout(() => {
-                user.status = false;
-                this.setState({ users: this.state.users });
-            }, 6000);
+            else {
+                data.connectionTimeoutId = null;
+                const joined = this.state.users.concat([data]);
+                this.setState({ users: joined });
+            }
         }
+    }
+
+    addUser(user) {
+        const users = Array.from(this.state.users);
+        users.push(user);
+
+        this.setState({ users: users });
     }
 
     public render() {
@@ -164,10 +176,8 @@ class App extends React.Component<any, any> {
                                 typing={this.state.typing}
                                 blinkChatNotif={this.blinkChatNotif} /> :
 
-                            <Login users={this.state.users} ignoreStr={Users.ignoreStr} onSubmit={(user, room) => this.login(user, room)} />
+                            <Login onSubmit={(user, room) => this.login(user, room)} />
                     }
-
-
                 </div>
             </div>
         )
