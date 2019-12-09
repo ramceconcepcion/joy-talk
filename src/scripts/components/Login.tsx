@@ -45,7 +45,7 @@ class Login extends React.Component<any, any>{
                     <div className="separator"></div>
                     <label className="room" htmlFor="">Enter room code:</label>
                     <input className="login-txt room" type="password" placeholder="" ref="input2" />
-                    <input className="submitLogin" type="submit" value="Login" />
+                    <input className="submitLogin" type="submit" value="Enter" />
                     {this.state.error ? <span className="error">Please fill all fields.</span> : null}
                 </form>
             </div>
