@@ -5,6 +5,7 @@ import sendicon from '../../icons/send.svg';
 import imageicon from '../../icons/image.svg';
 
 import { toBase64 } from '../misc/utils';
+import ChatMessage from '../models/ChatMessage';
 
 class ChatInput extends React.Component<any, any>{
     typingTimeoutId: any;
@@ -31,13 +32,12 @@ class ChatInput extends React.Component<any, any>{
     }
 
     createChat(content, type?) {
-        return {
-            id: this.state.user.id,
-            name: this.state.user.name,
-            content: content,
-            timestamp: new Date().getTime(),
-            type: type || "text"
-        }
+        return new ChatMessage(
+            this.state.user.id,
+            this.state.user.name,
+            content,
+            type
+        );
     }
 
     sendChat(e) {

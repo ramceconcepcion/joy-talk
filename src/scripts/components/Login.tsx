@@ -1,5 +1,5 @@
 import React from 'react';
-import uuidv4 from 'uuid/v4';
+import User from '../models/User';
 
 class Login extends React.Component<any, any>{
     constructor(props) {
@@ -20,12 +20,7 @@ class Login extends React.Component<any, any>{
         const roomCode = roomCodeEl.value.replace(/\n/g, "<br/>").replace(/\s\s+/g, ' ');
 
         if (userName !== " " && userName !== "" && roomCode !== " " && roomCode !== "") {
-            let user = {
-                id: uuidv4(),
-                name: userName,
-                status: true,
-                connectionTimeoutId: null,
-            }
+            let user = new User(userName);
 
             this.props.onSubmit(user, roomCodeEl.value);
             userNameEl.value = "";
