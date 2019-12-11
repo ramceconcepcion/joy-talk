@@ -36,10 +36,10 @@ class Login extends React.Component<any, any>{
                 <div className="login-subtitle">Your quick chat solution against workplace IT.</div>
                 <form className="login-form" onSubmit={(evt) => this.submit(evt)}>
                     <label htmlFor="">Enter your name:</label>
-                    <input className="login-txt" type="text" placeholder="" ref="input1" />
+                    <input className="login-txt" type="text" placeholder="" ref="input1" maxLength={32} />
                     <div className="separator"></div>
                     <label className="room" htmlFor="">Enter room code:</label>
-                    <input className="login-txt room" type="password" placeholder="" ref="input2" />
+                    <input className="login-txt room" type="text" placeholder="" ref="input2" maxLength={32} />
                     <input className="submitLogin" type="submit" value="Enter" />
                     {this.state.error ? <span className="error">Please fill all fields.</span> : null}
                 </form>
