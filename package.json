@@ -9,7 +9,7 @@
     "@types/react-dom": "16.9.0",
     "bufferutil": "4.0.1",
     "express": "4.17.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "push.js": "^1.0.12",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
